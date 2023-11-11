@@ -21,3 +21,16 @@
 8. **امکانات لاگ‌گذاری و مانیتورینگ:** Kubernetes ابزارها و امکانات متنوعی برای لاگ‌گذاری و مانیتورینگ برنامه‌ها و سیستم‌ها فراهم می‌کند.
 
 استفاده از Kubernetes در محیط‌های مدیریت کانتینرها به ارتقاء انعطاف‌پذیری، کارایی، و قابلیت مقیاس‌پذیری سیستم‌های نرم‌افزاری کمک می‌کند.
+
+
+
+- service discovery and service load balancing
+- storage orchestration
+- automatic rollout and rollback
+- automatic bin packaging منابع را در سطح سرور متناسب توزیع میکنه
+- self healing خود درمانی
+- secret and config management مدیریت کانفیگها
+
+
+  
+- 
