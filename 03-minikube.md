@@ -18,13 +18,13 @@ Minikube
 # Create cluster with minikube
 برای ایجاد یک کلاستر Kubernetes با استفاده از Minikube، مراحل زیر را دنبال کنید:
 
-1. **نصب Minikube:**
+**نصب Minikube:**
    ابتدا اطمینان حاصل کنید که Minikube بر روی سیستم شما نصب شده باشد. شما می‌توانید آخرین نسخه از Minikube را از [وب‌سایت Minikube](https://minikube.sigs.k8s.io/docs/start/) دریافت و نصب کنید.
 
-2. **نصب یک محیط مجازی (Optional):**
+**نصب یک محیط مجازی (Optional):**
    Minikube نیاز به یک محیط مجازی مانند VirtualBox یا Docker دارد. شما می‌توانید یکی از این محیط‌ها را بر روی سیستم خود نصب کنید. برای نصب VirtualBox یا Docker به [وب‌سایت VirtualBox](https://www.virtualbox.org/) یا [وب‌سایت Docker](https://www.docker.com/) مراجعه کنید.
 
-3. **اجرای Minikube:**
+**اجرای Minikube:**
    از ترمینال یا دستورخط (Command Line) خود Minikube را اجرا کنید. مثلاً اگر از VirtualBox استفاده می‌کنید:
 
    ```bash
@@ -33,10 +33,10 @@ Minikube
 
    این دستور Minikube را با محیط مجازی VirtualBox راه‌اندازی می‌کند.
 
-4. **صبر تا Minikube شروع شود:**
+**صبر تا Minikube شروع شود:**
    Minikube به مدت چند دقیقه نیاز دارد تا یک کلاستر Kubernetes کوچک را راه‌اندازی کند. صبر کنید تا کلاستر کامل شود.
 
-5. **احراز هویت با Kubernetes Cluster:**
+**احراز هویت با Kubernetes Cluster:**
    بعد از راه‌اندازی، احراز هویت شما با کلاستر باید تنظیم شود. دستور زیر به شما کمک می‌کند تا به کلاستر متصل شوید:
 
    ```bash
@@ -45,7 +45,7 @@ Minikube
 
    این دستور کانفیگ فعلی `kubectl` را بر روی کلاستر Minikube تنظیم می‌کند.
 
-6. **بررسی وضعیت کلاستر:**
+**بررسی وضعیت کلاستر:**
    حالا می‌توانید وضعیت کلاستر خود را با دستور زیر بررسی کنید:
 
    ```bash
