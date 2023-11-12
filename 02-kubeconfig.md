@@ -61,3 +61,48 @@ kubectl --kubeconfig=/path/to/kubeconfig2 get pods
 با این کار، شما می‌توانید به سادگی میان چندین فایل `kubeconfig` جابه‌جا شوید یا از همه آن‌ها در یک دستور `kubectl` استفاده کنید.
 
 توجه داشته باشید که این تغییرات معمولاً تاثیری بر روی تمام دستورات `kubectl` و ابزارهای Kubernetes دارد.
+
+# view config
+```
+kubectl config get-contexts
+CURRENT   NAME         CLUSTER      AUTHINFO     NAMESPACE
+*         kind-kind    kind-kind    kind-kind
+          kind-milad   kind-milad   kind-milad
+
+kubectl config view
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: DATA+OMITTED
+    server: https://127.0.0.1:37399
+  name: kind-kind
+- cluster:
+    certificate-authority-data: DATA+OMITTED
+    server: https://127.0.0.1:33943
+  name: kind-milad
+contexts:
+- context:
+    cluster: kind-kind
+    user: kind-kind
+  name: kind-kind
+- context:
+    cluster: kind-milad
+    user: kind-milad
+  name: kind-milad
+current-context: kind-kind
+kind: Config
+preferences: {}
+users:
+- name: ahmad
+  user:
+    token: REDACTED
+- name: kind-kind
+  user:
+    client-certificate-data: REDACTED
+    client-key-data: REDACTED
+- name: kind-milad
+  user:
+    client-certificate-data: REDACTED
+    client-key-data: REDACTED
+
+```
