@@ -1,4 +1,4 @@
-Minikube 
+ Minikube 
 
 یک ابزار متن باز است که برای ایجاد و مدیریت یک خوشه Kubernetes محلی (local Kubernetes cluster) بر روی یک ماشین مجازی یا سیستم محلی (مثل لپتاپ یا رایانه شخصی) استفاده می‌شود. Minikube یک راه ساده و سریع برای شروع با Kubernetes بر روی یک محیط توسعه‌ای فراهم می‌کند.
 
@@ -28,7 +28,8 @@ Minikube
    از ترمینال یا دستورخط (Command Line) خود Minikube را اجرا کنید. مثلاً اگر از VirtualBox استفاده می‌کنید:
 
    ```bash
-   minikube start --driver=virtualbox
+minikube start --driver=virtualbox
+minikube start --driver=docker
    ```
 
    این دستور Minikube را با محیط مجازی VirtualBox راه‌اندازی می‌کند.
