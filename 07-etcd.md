@@ -41,6 +41,8 @@ port cluster etcd : 2380
 ![image](https://github.com/milad6745/Kubernetes/assets/113288076/d222b2ec-9b72-499f-90b2-3308c5f9b4fb)
 
 چیزایی که روی Etcd ذخیره میشود عبارت است از : 
+
+
 ![image](https://github.com/milad6745/Kubernetes/assets/113288076/66e60d97-3253-43a6-80e2-74836a981fc8)
 
 
