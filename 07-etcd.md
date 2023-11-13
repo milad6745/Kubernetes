@@ -30,3 +30,5 @@ etcd از الگوریتم Raft برای مدیریت توزیع‌شده داد
 - Scalability
 - Execution Order
 - safely
+
+  
