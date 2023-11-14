@@ -17,3 +17,7 @@
 4. **Namespace Controller:** مدیریت فضاهای نام (Namespaces) در کلاستر.
 
 هرکدام از این مدیریت‌کننده‌ها وظایف خاص خود را انجام می‌دهند و در کل Control Manager با همکاری آن‌ها به مدیریت جامع و اجرایی کلاستر Kubernetes می‌پردازد.
+
+کنترل منیجر شامل موارد زیر است : 
+![image](https://github.com/milad6745/Kubernetes/assets/113288076/a01ce2ff-2503-450a-ab05-7333e796b99c)
+
