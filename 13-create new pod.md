@@ -2,7 +2,7 @@
 
 1. **ایجاد یک پاد:**
    ```bash
-   kubectl run mypod --image=nginx --port=80
+   kubectl run nginx-pod --image=nginx --port=80
    ```
    در اینجا:
    - `mypod`: نامی که به پاد اختصاص داده می‌شود.
@@ -18,6 +18,31 @@
 3. **بررسی وضعیت پاد با جزئیات بیشتر:**
    ```bash
    kubectl describe pod mypod
+
+   kubectl describe pod nginx-pod
+Name:             nginx-pod
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             milad-cluster-control-plane/172.18.0.2
+Start Time:       Tue, 14 Nov 2023 18:54:42 +0300
+Labels:           run=nginx-pod
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.11
+IPs:
+  IP:  10.244.0.11
+Containers:
+  nginx-pod:
+    Container ID:   containerd://e0e5c404217847b9f2e31734515ad0b91155bbec2edefc48a7340819065d93e3
+    Image:          nginx:latest
+    Image ID:       docker.io/library/nginx@sha256:86e53c4c16a6a276b204b0fd3a8143d86547c967dc8258b3d47c3a21bb68d3c6
+    Port:           80/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Tue, 14 Nov 2023 18:54:45 +0300
+    Ready:          True
+    Restart Count:  0
    ```
    این دستور اطلاعات جزئی‌تری در مورد پاد فراهم می‌کند.
 
