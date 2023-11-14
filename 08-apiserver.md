@@ -14,6 +14,12 @@
 ## API Server 
 در Kubernetes (کوبرنتیز) یکی از اجزای اصلی سیستم است و به عنوان دروازه واسط بین کلاینت‌ها و سایر اجزا و کامپوننت‌های Kubernetes عمل می‌کند. این کامپوننت مسئول مدیریت و اجرای عملیات‌های API بر روی کلیه‌ی منابع کلاستر می‌باشد.
 
+- Resource Management
+- CRUD Operations Support
+- Access Control
+- WebSocket Execution
+- Events and Notifications
+
 وظایف اصلی API Server در Kubernetes عبارتند از:
 
 **مدیریت منابع:** API Server مسئول مدیریت منابع مختلف در کلاستر است. این منابع شامل پاد (Pods)، سرویس‌ها (Services)، حجم‌های نگهداری داده (Persistent Volumes)، متن کاوی (ConfigMaps)، سرورها (Nodes) و دیگر منابع می‌شوند.
