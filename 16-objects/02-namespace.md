@@ -17,6 +17,32 @@ kubectl create namespace mynamespace
 
 سپس می‌توانید منابع خود را درون این `Namespace` ایجاد کرده و مدیریت کنید.
 
+## name space default on kubernetes
+
+در Kubernetes، علاوه بر `default` که `Namespace` پیش‌فرض است، چندین `Namespace` دیگر نیز از پیش ساخته شده‌اند. این `Namespace`ها اغلب برای مقاصد خاصی طراحی شده‌اند و برخی از آنها به طور معمول در نصب استاندارد Kubernetes وجود دارند. در Kubernetes نسخه 1.22، برخی از `Namespace`های از پیش تعریف شده عبارتند از:
+
+**`default`:**
+
+این `Namespace` به‌طور پیش‌فرض برای ایجاد و مدیریت منابع بدون تعیین `Namespace` استفاده می‌شود.
+
+**`kube-system`:** 
+
+این `Namespace` برای اجزای سیستمی مانند `kube-dns`, `kube-proxy`, `kube-controller-manager`, و `kube-scheduler` استفاده می‌شود.
+
+**`kube-public`:** 
+
+منابع موجود در این `Namespace` به‌صورت عمومی قابل مشاهده هستند و برای اطلاعات عمومی و منابعی که می‌خواهید به تمام کاربران دسترسی داشته باشد، استفاده می‌شود.
+
+**`kube-node-lease`:** 
+
+این `Namespace` برای اطلاعاتی مانند lease های ترکیب کننده های مسیر (kubelet) استفاده می‌شود.
+
+**`ingress-nginx`:**
+
+این `Namespace` برای نصب مهمانی‌های Ingress Nginx مورد استفاده قرار می‌گیرد. این مهمانی‌ها برای مدیریت ترافیک و مسیریابی درون کلاستر استفاده می‌شوند.
+
+
+
 ## Name space reserve
 نیم اسپیس های kube- رزرو خو کوبرنتیز است و نباید از آنها استفاده کرد.
 
