@@ -88,3 +88,46 @@ spec:
 NAME              AGE   REQUEST                                                 LIMIT
 myresourcequota   11s   pods: 4/10, requests.cpu: 0/2, requests.memory: 0/4Gi   limits.cpu: 0/4, limits.memory: 0/8Gi
 ```
+
+## limit range for namespace
+برای تعیین محدودیت‌های مصرف منابع در یک `Namespace`، می‌توانید از `LimitRange` استفاده کنید. `LimitRange` به شما این امکان را می‌دهد که حداقل و حداکثر مقادیر مجاز برای منابع مختلف مانند CPU و حافظه را مشخص کنید.
+یک نمونه `LimitRange` برای یک `Namespace` به نام "mynamespace" آمده است:
+
+```yaml
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: mylimitrange
+  namespace: defaults
+spec:
+  limits:
+  - type: Pod
+    max:
+      cpu: "1"
+      memory: 1Gi
+    min:
+      cpu: "100m"
+      memory: 100Mi
+  - type: Container
+    default:
+      cpu: "500m"
+      memory: 512Mi
+    max:
+      cpu: "2"
+      memory: 2Gi
+    min:
+      cpu: "100m"
+      memory: 100Mi
+```
+
+در این مثال:
+
+- `name` نام `LimitRange` را مشخص می‌کند.
+- `namespace` نام `Namespace` را مشخص می‌کند که می‌خواهیم محدودیت‌ها را برای آن اعمال کنیم.
+- `type` نوع `LimitRange` را مشخص می‌کند، که می‌تواند "Pod" یا "Container" باشد.
+- `max` و `min` حداکثر و حداقل مقادیر مجاز را برای منابع مختلف تعیین می‌کنند.
+
+در این مثال:
+
+- برای `Pod`، حداکثر و حداقل مقادیر برای CPU و حافظه تعیین شده‌اند.
+- برای `Container`، مقادیر پیش‌فرض، حداکثر و حداقل برای CPU و حافظه تعیین شده‌اند.
