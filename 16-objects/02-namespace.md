@@ -67,7 +67,7 @@ nginx-pod   1/1     Running   0          5d3h
 ```
 ## resource quata For namespace
 میخواهیم منابع یک name space را محدود کنیم .
-```bash
+```yaml
 apiVersion: v1
 kind: ResourceQuota
 metadata:
