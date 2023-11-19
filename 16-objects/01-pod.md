@@ -53,3 +53,115 @@ kubectl detele pod nginx
 -rw------- 1 root root 3.4K Nov 12 13:56 kube-controller-manager.yaml
 -rw------- 1 root root 1.5K Nov 12 13:56 kube-scheduler.yaml
 ```
+![image](https://github.com/milad6745/Kubernetes/assets/113288076/d50d5b14-173d-4197-a3b0-902c4ad52c56)
+
+## pod phase
+   
+
+**Pending (در انتظار):** 
+
+Pod در حال ایجاد است و منابع مورد نیاز برای اجرای کانتینرها در حال جذب شدن هستند.
+
+**Running (در حال اجرا):**
+
+تمامی کانتینرهای Pod اجرا شده‌اند و در حال حاضر در حال اجرای کد هستند.
+
+**Succeeded (موفق):**
+
+تمامی کانتینرهای Pod با موفقیت اجرا شده‌اند و اجرای آنها به پایان رسیده است.
+
+**Failed (ناموفق):** 
+
+حداقل یکی از کانتینرهای Pod با خطا مواجه شده است و اجرای آنها به پایان رسیده است.
+
+**Unknown (ناشناخته):** 
+
+وضعیت Pod به‌دلیل مشکلات ارتباطی یا دلایل دیگر قابل تشخیص نیست.
+
+
+## Example init container
+
+create a pod with two container with init container
+```yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+  - name: mynginxcontainer
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+  initContainers:
+  - name: myinitcontainer
+    image: busybox:latest
+    command: ['sh', '-c', 'echo "Init Container is running"']
+```
+
+```bash
+# kubectl describe pod mypod
+Init Containers:
+  myinitcontainer:
+    Container ID:  containerd://5983265b635ea507298d67705ec64bd42640746bc6542dc2ac70996e34b1ab77
+    Image:         busybox:latest
+    Image ID:      docker.io/library/busybox@sha256:3fbc632167424a6d997e74f52b878d7cc478225cffac6bc977eedfe51c7f4e79
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      sh
+      -c
+      echo "Init Container is running"
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sun, 19 Nov 2023 20:15:13 +0300
+      Finished:     Sun, 19 Nov 2023 20:15:13 +0300
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-g4m5r (ro)
+Containers:
+  mynginxcontainer:
+    Container ID:   containerd://2d37cbb64bb65fb0b9c70bee44ed5268e2e0acd9032d4960022922314ac03f93
+    Image:          nginx:latest
+    Image ID:       docker.io/library/nginx@sha256:86e53c4c16a6a276b204b0fd3a8143d86547c967dc8258b3d47c3a21bb68d3c6
+    Port:           80/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sun, 19 Nov 2023 20:15:16 +0300
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-g4m5r (ro)
+```
+# Example multi container on a pod
+```bash
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mc1
+spec:
+  volumes:
+  - name: html
+    emptyDir: {}
+  containers:
+  - name: 1st
+    image: nginx
+    volumeMounts:
+    - name: html
+      mountPath: /usr/share/nginx/html
+  - name: 2nd
+    image: debian
+    volumeMounts:
+    - name: html
+      mountPath: /html
+    command: ["/bin/sh", "-c"]
+    args:
+      - while true; do
+          date >> /html/index.html;
+          sleep 1;
+        done
+```
