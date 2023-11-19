@@ -65,7 +65,7 @@ mypod       1/1     Running   0          125m
 nginx       1/1     Running   0          6h16m
 nginx-pod   1/1     Running   0          5d3h
 ```
-## resource quata to namespace
+## resource quata For namespace
 میخواهیم منابع یک name space را محدود کنیم .
 ```bash
 apiVersion: v1
