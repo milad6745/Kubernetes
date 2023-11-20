@@ -40,41 +40,38 @@ create a service & create a pod and connect pod to service with label and select
 apiVersion: v1
 kind: Pod
 metadata:
-  name: mypod
+  name: mypodone
   labels:
     app: my-app
-    role: backend
 spec:
   containers:
     - name: my-container
       image: nginx:latest
-      ports:
-        - containerPort: 80
 
-# Service Manifest (service.yaml)
+
+---
+
+
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-service
+  name: service1
 spec:
   selector:
     app: my-app
-    role: backend
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
+
 ```
 حال میبینیم که پادمان با استفاده از label به سرویس امان متصل شده است .
 ```bash
-#kubectl get pod mypod-label -o wide
-NAME          READY   STATUS    RESTARTS   AGE   IP            NODE                          NOMINATED NODE   READINESS GATES
-mypod-label   1/1     Running   0          33s   10.244.0.18   milad-cluster-control-plane   <none>           <none>
-
-#kubectl get ep
-NAME         ENDPOINTS         AGE
-kubernetes   172.18.0.2:6443   6d22h
-my-service   10.244.0.18:80    136m
+kubectl get ep
+NAME         ENDPOINTS                       AGE
+kubernetes   172.18.0.2:6443                 7d
+my-service   10.244.0.18:80                  3h40m
+service1     10.244.0.18:80,10.244.0.19:80   7s
 ```
 ## create label to running node
 
