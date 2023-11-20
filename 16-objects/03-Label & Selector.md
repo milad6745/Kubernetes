@@ -34,3 +34,34 @@ selector:
 ![Uploading image.png…]()
 
 
+## Example
+create a service & create a pod and connect pod to service with label and selector
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+  labels:
+    app: my-app
+    role: backend
+spec:
+  containers:
+    - name: my-container
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+
+# Service Manifest (service.yaml)
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: my-app
+    role: backend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+```
