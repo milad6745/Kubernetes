@@ -65,3 +65,34 @@ spec:
       port: 80
       targetPort: 80
 ```
+حال میبینیم که پادمان با استفاده از label به سرویس امان متصل شده است .
+```bash
+#kubectl get pod mypod-label -o wide
+NAME          READY   STATUS    RESTARTS   AGE   IP            NODE                          NOMINATED NODE   READINESS GATES
+mypod-label   1/1     Running   0          33s   10.244.0.18   milad-cluster-control-plane   <none>           <none>
+
+#kubectl get ep
+NAME         ENDPOINTS         AGE
+kubernetes   172.18.0.2:6443   6d22h
+my-service   10.244.0.18:80    136m
+```
+## create label to running node
+
+برای افزودن یک برچسب (label) به یک نود در Kubernetes، می‌توانید از دستور `kubectl label nodes` استفاده کنید. در زیر، یک مثال نحوه افزودن یک برچسب به یک نود نشان داده شده است:
+
+```bash
+kubectl label nodes <نام-نود> <نام-برچسب>=<مقدار-برچسب>
+```
+
+برای مثال، فرض کنید که شما می‌خواهید به نودی با نام "mynode" برچسب "environment=production" اختصاص دهید، دستور زیر را اجرا کنید:
+
+```bash
+kubectl label nodes mynode size=large
+```
+برای دیدن لیبل ست شده
+```bash
+kubectl edit node mynode
+labeles:
+....
+size=large
+```
