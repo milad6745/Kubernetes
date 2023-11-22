@@ -107,3 +107,28 @@ kubectl rollout undo deployment hello-world --to-revision=2
  ```
  kubectl scale deployment hello-world --replicas 2
 ```
+
+# تغییر در تعداد history در Deployment
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: نام-Deployment
+spec:
+  replicas: تعداد-Replica
+  selector:
+    matchLabels:
+      app: نام-اپلیکیشن
+  template:
+    metadata:
+      labels:
+        app: نام-اپلیکیشن
+    spec:
+      containers:
+      - name: نام-کانتینر
+        image: تصویر-کانتینر:تگ
+        ports:
+        - containerPort: پورت
+  revisionHistoryLimit: <تعداد>
+```
