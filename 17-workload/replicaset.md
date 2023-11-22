@@ -31,3 +31,43 @@ spec:
 در این مثال، ReplicaSet `example-replicaset` تعداد 3 نمونه از پادها با برچسب `app=example-app` ایجاد می‌کند. Template مشخص می‌کند چگونه هر پاد باید ایجاد شود (در اینجا از تصویر `nginx:latest` استفاده شده است).
 
 # Example
+```yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: hello-world-rs
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: hello-world-rs
+  template:
+    metadata:
+      labels:
+        app: hello-world-rs
+        svc: example
+    spec:
+      containers:
+        - name: hello-world
+          image: busybox:1.28
+          command: ['sh', '-c', 'echo The app is running! && sleep 3600']
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 10m
+              memory: 10Mi
+```yaml
+kubectl get rs
+NAME             DESIRED   CURRENT   READY   AGE
+hello-world-rs   4         4         4       17h
+```
+```
+kubectl get pod
+NAME                   READY   STATUS    RESTARTS       AGE
+hello-world-rs-49jq4   1/1     Running   17 (31m ago)   17h
+hello-world-rs-f5kx5   1/1     Running   17 (31m ago)   17h
+hello-world-rs-lfq69   1/1     Running   17 (31m ago)   17h
+hello-world-rs-pc9gb   1/1     Running   17 (31m ago)   17h
+```
+
