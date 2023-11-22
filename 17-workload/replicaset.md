@@ -58,12 +58,12 @@ spec:
               cpu: 10m
               memory: 10Mi
 ```
-```yaml
+```bash
 kubectl get rs
 NAME             DESIRED   CURRENT   READY   AGE
 hello-world-rs   4         4         4       17h
 ```
-```
+```bash
 kubectl get pod
 NAME                   READY   STATUS    RESTARTS       AGE
 hello-world-rs-49jq4   1/1     Running   17 (31m ago)   17h
