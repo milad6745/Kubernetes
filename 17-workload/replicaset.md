@@ -57,6 +57,7 @@ spec:
             requests:
               cpu: 10m
               memory: 10Mi
+```
 ```yaml
 kubectl get rs
 NAME             DESIRED   CURRENT   READY   AGE
