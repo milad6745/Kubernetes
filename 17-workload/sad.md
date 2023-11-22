@@ -1,4 +1,4 @@
-## پاکسازی داده های در IBM Security Guardium
+# پاکسازی داده های در IBM Security Guardium
 
 چه زمانی باید از دستور 'clean DAM_data' برای پاکسازی Guardium استفاده کنم؟
 
