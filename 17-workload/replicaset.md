@@ -29,3 +29,5 @@ spec:
 ```
 
 در این مثال، ReplicaSet `example-replicaset` تعداد 3 نمونه از پادها با برچسب `app=example-app` ایجاد می‌کند. Template مشخص می‌کند چگونه هر پاد باید ایجاد شود (در اینجا از تصویر `nginx:latest` استفاده شده است).
+
+# Example
