@@ -50,3 +50,12 @@ kubectl get rs
 NAME                    DESIRED   CURRENT   READY   AGE
 hello-world-8977c54c9   2         2         2       94s
 ```
+```bash
+kubectl get pod
+NAME                          READY   STATUS    RESTARTS       AGE
+hello-world-8977c54c9-2dhwb   1/1     Running   0              5m20s
+hello-world-8977c54c9-bcvsp   1/1     Running   0              5m20s
+```
+8977c54c9 = replica id
+2dhwb = Deployment ID
+
