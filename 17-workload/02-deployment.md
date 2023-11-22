@@ -57,5 +57,53 @@ hello-world-8977c54c9-2dhwb   1/1     Running   0              5m20s
 hello-world-8977c54c9-bcvsp   1/1     Running   0              5m20s
 ```
 8977c54c9 = replica id
+
 2dhwb = Deployment ID
 
+## Roll back from Deployment
+مثلا میخواهیم ورژن Nginx امان را ارتقا دهیم . برای این منظور فایل YAML را باز میکنیم و سپس ورژن image را در فایل عوض میکنیم و سپس :
+```
+kubectl apply -f <yaml file>
+```
+سپس مشاهده میکنیم که یه سری از pod هایمان دلیت شده و یه سری جدید ایجاد میشوند .`
+```
+#kubectl get pod
+NAME                           READY   STATUS              RESTARTS       AGE
+hello-world-794f564865-blfl8   0/1     ContainerCreating   0              88s
+hello-world-8977c54c9-2dhwb    1/1     Running             0              95m
+```
+حالا اگر ما kubectl get rs بزنیم 2 تا Replicaset میبینیم که یکی آپدیت قدیمی و یکی آپدیت جدیدمان است .
+```
+kubectl get rs
+NAME                     DESIRED   CURRENT   READY   AGE
+hello-world-794f564865   2         2         2       7m10s
+hello-world-8977c54c9    0         0         0       101m
+```
+
+با این کامند به ورژن Deployment قبلی برمی گردد .
+```
+kubectl rollout undo deployment hello-world
+```
+
+## rollout history
+این کامند ورژن کارهایی که انجام شده است را نشان میدهد و میتوان به آن بازگشت .
+
+
+```
+kubectl rollout history  deployment  hello-world
+deployment.apps/hello-world
+REVISION  CHANGE-CAUSE
+2         ver1
+5         ver1
+6         ver1
+```
+و با این کامند به ورژن دو برمیگردیم
+```
+kubectl rollout undo deployment hello-world --to-revision=2
+```
+
+## scale deployment
+ تغییر در تعداد replica و scale کردن Deployment
+ ```
+ kubectl scale deployment hello-world --replicas 2
+```
