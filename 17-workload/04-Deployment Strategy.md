@@ -49,7 +49,7 @@
 
 
 
-# Recreate Example
+## Recreate Example
 در اینجا ما با استفاده از استراتژی Recreate دو نود را بالا میاوریم و در صورتی که آپدیتی مثلا در image داشته باشیم مشاهده میشود که تمامی نو هایمان دان میشوند و دوباره ایجاد میشوند . 
 ```
 apiVersion: apps/v1
@@ -109,3 +109,55 @@ recreate      10/10   10           10          55s    hello-world   ahmadrafiee/
 ![image](https://github.com/milad6745/Kubernetes/assets/113288076/af06be90-c0dc-4da6-b253-36ed4908910f)
 
 
+## rolling update Example
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rolling-update
+  annotations:
+    kubernetes.io/change-cause: ver1
+spec:
+  selector:
+    matchLabels:
+      app: rolling-update
+  replicas: 20
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: rolling-update
+        svc: example
+    spec:
+      containers:
+        - name: hello-world
+          image: ahmadrafiee/go-hello-world:1
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 10m
+              memory: 10Mi
+            limits:
+              memory: 20Mi
+              cpu: 20m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rolling-update
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: rolling-update
+```
+در اینجا مشاهده میکنیم که بعد از تغییر در ایمیج سه تا سه تا پاد ها د حال آپدیت شدن هستند .
+![image](https://github.com/milad6745/Kubernetes/assets/113288076/b92f9154-7878-4ecc-85e7-066ba1c3e9c6)
