@@ -47,3 +47,65 @@
 در یک نگاه : 
 ![image](https://github.com/milad6745/Kubernetes/assets/113288076/18b367cf-20e6-44ae-b3ee-1fe1ffa08d42)
 
+
+
+# Recreate Example
+در اینجا ما با استفاده از استراتژی Recreate دو نود را بالا میاوریم و در صورتی که آپدیتی مثلا در image داشته باشیم مشاهده میشود که تمامی نو هایمان دان میشوند و دوباره ایجاد میشوند . 
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recreate
+  annotations:
+    kubernetes.io/change-cause: ver1
+spec:
+  selector:
+    matchLabels:
+      app: recreate
+  replicas: 10
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: recreate
+        svc: example
+    spec:
+      containers:
+        - name: hello-world
+          image: ahmadrafiee/go-hello-world:1
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 10m
+              memory: 10Mi
+            limits:
+              memory: 20Mi
+              cpu: 20m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recreate
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: recreate
+```
+```
+kubectl get deployments.apps -o wide
+NAME          READY   UP-TO-DATE   AVAILABLE   AGE    CONTAINERS    IMAGES                         SELECTOR
+recreate      10/10   10           10          55s    hello-world   ahmadrafiee/go-hello-world:1   app=recreate
+```
+لحظه دان شدن تمامی نود ها در Deployment امان در زمان تغییر در ایمیج
+
+![image](https://github.com/milad6745/Kubernetes/assets/113288076/83f40311-e1d6-4c07-8b68-e2dbdc0ab235)
+
+![image](https://github.com/milad6745/Kubernetes/assets/113288076/af06be90-c0dc-4da6-b253-36ed4908910f)
+
+
