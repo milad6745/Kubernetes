@@ -66,3 +66,7 @@ web-0         1/1     Running   0          21s
 web-1         1/1     Running   0          14s
 web-2         1/1     Running   0          9s
 ```
+## موارد قابل استفاده Statefullset
+
+از StatefulSet در Kubernetes برای مواردی استفاده می‌شود که نیاز به مدیریت وضعیت (state) دارند و از دیدگاه داده‌ها، اهمیت به ترتیب و شناسه یکتا دارند. موارد زیر از جمله استفاده‌های معمول StatefulSet در Kubernetes هستند. اگر اپلیکیشن شما نیاز به اجرای مرتب (ordered execution) با توجه به شناسه‌های یکتا دارد، StatefulSet مناسب است.
+
