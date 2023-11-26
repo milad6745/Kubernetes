@@ -45,3 +45,15 @@ spec:
 - `example-container`: یک کانتینر ساده با تصویر `busybox`.
 - `command`: دستوری که در این کانتینر اجرا می‌شود (در اینجا فقط یک دستور echo).
 - `backoffLimit`: تعداد مجاز تلاش‌های مجدد در صورتی که `Job` نتواسته با موفقیت اجرا شود. در این مثال، تا دو بار مجدداً تلاش خواهد شد.
+
+```
+kubectl get pod                                                                                                                                      
+NAME                          READY   STATUS              RESTARTS   AGE
+pi-ftbcm                      0/1     ContainerCreating   0          18s
+```
+پس از اجرا کامل شده و از حالت اجرا خارج میشود .
+```
+kubectl get pod                                                                                                                                      
+NAME                          READY   STATUS      RESTARTS   AGE
+pi-ftbcm                      0/1     Completed   0          2m4s
+```
