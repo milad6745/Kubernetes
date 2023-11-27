@@ -1,11 +1,11 @@
 # autoscaling
 
-1- horizental (scaleout)
+1- horizental pod autoscaler (scaleout) (HPA)
 
 از همون پاد چند تا ایجاد میکنیم . بزرگ میکنیم تعداد پاد ها را - stateless استفاده میشود .
 
 
-2- vertical (scale up)
+2- vertical pod autoscaler (scale up) (VPA)
 
 اضافه کردن منایع بع پاد - چاق کردن پاد - برای statefullset ها بیشتر کاربرد دارد چون نمیتوانند تهدادشان را افزایش دهند .
 
