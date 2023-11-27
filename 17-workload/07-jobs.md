@@ -57,3 +57,8 @@ kubectl get pod
 NAME                          READY   STATUS      RESTARTS   AGE
 pi-ftbcm                      0/1     Completed   0          2m4s
 ```
+```
+kubectl get jobs.batch pi
+NAME   COMPLETIONS   DURATION   AGE
+pi     1/1           118s       24h
+```
