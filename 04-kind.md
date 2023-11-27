@@ -1,4 +1,6 @@
-Kind (Kubernetes in Docker) یک ابزار متن باز است که به شما امکان ایجاد کلاستر Kubernetes محلی با استفاده از Docker container فراهم می‌کند. از Kind معمولاً برای توسعه، آزمون و تست برنامه‌های Kubernetes استفاده می‌شود. دستورات Kind از روی Docker container ساخته می‌شوند و کنترلی ساده بر روی یک محیط Kubernetes محلی فراهم می‌کنند.
+Kind (Kubernetes in Docker) 
+
+یک ابزار متن باز است که به شما امکان ایجاد کلاستر Kubernetes محلی با استفاده از Docker container فراهم می‌کند. از Kind معمولاً برای توسعه، آزمون و تست برنامه‌های Kubernetes استفاده می‌شود. دستورات Kind از روی Docker container ساخته می‌شوند و کنترلی ساده بر روی یک محیط Kubernetes محلی فراهم می‌کنند.
 
 برای ایجاد یک کلاستر جدید با Kind، مراحل زیر را دنبال کنید:
 
