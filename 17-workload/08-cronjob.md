@@ -27,29 +27,37 @@
 مثال یک `CronJob` ساده:
 
 ```yaml
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: example-cronjob
+  name: cronjob
 spec:
-  schedule: "0 2 * * *"
+  # https://crontab.guru/
+  schedule: "* * * * *"
+  concurrencyPolicy: Allow
+  failedJobsHistoryLimit: 10
+  successfulJobsHistoryLimit: 10
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-          - name: example-container
-            image: busybox
-            command: ["echo", "Hello from the cron job!"]
-  concurrencyPolicy: Forbid
+            - name: cronjob
+              image: busybox:1.28
+              args:
+                - /bin/sh
+                - -c
+                - date; echo Hello from the Kubernetes cluster
+          restartPolicy: OnFailure
 ```
+مدام جاب تکرار میشه:
+```yaml
+kubectl get jobs.batch
+NAME               COMPLETIONS   DURATION   AGE
+cronjob-28351833   1/1           13s        91s
+cronjob-28351834   1/1           4s         31s
 
-در این مثال:
-
-- `example-cronjob`: نام `CronJob`.
-- `schedule`: زمان‌بندی مبتنی بر `cron` (در اینجا هر روز ساعت 2 صبح).
-- `example-container`: یک کانتینر ساده با تصویر `busybox`.
-- `command`: دستوری که در این کانتینر اجرا می‌شود (در اینجا فقط یک دستور echo).
-- `concurrencyPolicy`: مدیریت بازه زمانی؛ در این مثال تنظیم شده است که تنها یک اینستانس از Job در هر زمان اجرا شود.
-
-شما می‌توانید این `CronJob` را با دستور `kubectl apply -f your-cronjob-file.yaml` اجرا کنید.
+kubectl get cronjobs.batch cronjob
+NAME      SCHEDULE    SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+cronjob   * * * * *   False     0        36s             117s
+```
