@@ -98,3 +98,92 @@ kubectl -n kube-system get deployments.apps metrics-server
 NAME             READY   UP-TO-DATE   AVAILABLE   AGE
 metrics-server   1/1     1            1           12m
 ```
+
+
+# Example
+ساخت یک Deploy ment
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-apache
+spec:
+  selector:
+    matchLabels:
+      run: php-apache
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: php-apache
+    spec:
+      containers:
+      - name: php-apache
+        image: k8s.gcr.io/hpa-example:1
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 30m
+            memory: 30Mi
+          requests:
+            cpu: 10m
+            memory: 10Mi
+```
+حالا HPA امان را بر اساس Deploy ment ایجاد شده میسازیم.
+```
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: php-apache
+spec:
+  minReplicas: 3
+  maxReplicas: 20
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: php-apache
+
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 25
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 25
+```
+مشاهده میکنیم که بر اساس مینیمم تعداد پاد هایمان بالا آمدند
+```
+kubectl get pod
+php-apache-7f544d68bd-bxqts   0/1     ContainerCreating   0          1s
+php-apache-7f544d68bd-qzrtz   1/1     Running             0          2m33s
+php-apache-7f544d68bd-rskkq   0/1     ContainerCreating   0          1s
+```
+همچنین بررسی وضعیت HPA امان هم در حال بررسی است .
+```
+ kubectl get hpa
+NAME          REFERENCE                       TARGETS           MINPODS   MAXPODS   REPLICAS   AGE
+php-apache    Deployment/php-apache           73%/25%, 0%/25%   3         20        3         2m
+```
+
+metadata:
+اطلاعات متادیتا برای HPA، اعم از نام (name) آن، در اینجا php-apache.
+
+spec:
+اطلاعات تنظیمات اصلی HPA را شامل می‌شود:
+
+    minReplicas: حداقل تعداد Replicas که HPA مجاز به تنظیم می‌کند، در اینجا 3.
+    maxReplicas: حداکثر تعداد Replicas که HPA مجاز به تنظیم می‌کند، در اینجا 20.
+    scaleTargetRef: این بخش نشان‌دهنده به چه Deployment مرتبط است. در اینجا، به یک Deployment با نام php-apache اشاره دارد.
+
+metrics:
+این بخش تعیین می‌کند چه نوع معیارهایی برای تصمیم‌گیری در مورد تعداد Replicas باید استفاده شود. در اینجا، دو نوع معیار مشخص شده‌اند:
+
+    Resource با نام cpu: این معیار بر اساس نرخ استفاده از CPU تعیین می‌کند که آیا تعداد Replicas باید افزایش یابد یا کاهش یابد. میزان متوسط استفاده از CPU به عنوان یک درصد از ظرفیت کل، در اینجا 25 درصد.
+    Resource با نام memory: مشابه معیار قبلی، این بار بر اساس نرخ استفاده از حافظه عمل می‌کند
