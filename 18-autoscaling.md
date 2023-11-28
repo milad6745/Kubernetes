@@ -70,3 +70,31 @@ HPA
 زمانی که HPA فعال شده و به یک معیار مشخص از Metric Server نیاز دارد (مثل نرخ استفاده از CPU)، Metric Server اطلاعات مربوط به این معیارها را فراهم می‌کند. HPA سپس بر اساس این اطلاعات تصمیم می‌گیرد که آیا تعداد Replicas باید افزایش یابد یا کاهش یابد.
 
 به عبارت دیگر، Metric Server به HPA اطلاعات لازم را فراهم می‌کند تا این ابزار بتواند بر اساس شرایط فعلی منابع سیستمی (مثل CPU)، تصمیمات مربوط به افزایش یا کاهش تعداد Replicas را اعمال کند. این تعامل بین Metric Server و HPA موجب بهبود قابلیت‌های خودکارسازی و بهینه‌سازی منابع در محیط Kubernetes می‌شود.
+
+## install metric server
+```
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+```
+پاد ران شد ولی Ready نشد
+```
+kubectl get pod -n kube-system metrics-server-5b4fc487-vfkkw
+NAME                            READY   STATUS    RESTARTS   AGE
+metrics-server-5b4fc487-vfkkw   0/1     Running   0          66s
+```
+بررسی لاگ پاد
+```
+kubectl -n kube-system logs  -f   metrics-server-5b4fc487-vfkkw
+E1128 15:12:19.087173       1 scraper.go:140] "Failed to scrape node" err="Get \"https://172.18.0.3:10250/metrics/resource\": x509: cannot validate certificate for 172.18.0.3 because it doesn't contain any IP SANs" node="delete-cluster-control-plane"
+```
+```
+# add these configuration on deployment manifest metric server
+kubectl edit deployment metrics-server
+        - --kubelet-insecure-tls
+        - --authorization-always-allow-paths=/livez,/readyz
+```
+بعد از تغییر مورد برطرف میشود و پاد Ready میشود .
+```
+kubectl -n kube-system get deployments.apps metrics-server
+NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+metrics-server   1/1     1            1           12m
+```
