@@ -208,3 +208,70 @@ Resource
 # VPA
 ![image](https://github.com/milad6745/Kubernetes/assets/113288076/714131af-f5a1-4aa3-9523-1365c1fb5be6)
 خودش اپلیکیشن ما را بررسی میکند و بهمان Recomend میکند چقدر منابع نیاز دارد .
+
+
+
+## گام 1: نصب و راه‌اندازی VPA
+
+1. VPA را نصب کنید:
+
+```bash
+kubectl apply -f https://github.com/kubernetes/autoscaler/releases/download/vertical-pod-autoscaler-1.10.1/vertical-pod-autoscaler.yaml
+```
+
+2. برای استفاده از VPA، باید یک ConfigMap مرتبط با آن ایجاد کنید. مثالی از یک ConfigMap:
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vpa-recommender-config
+  namespace: kube-system
+data:
+  container-recommender: |- 
+    frequentscheduler:
+      enabled: true
+  pv-recommender: |- 
+    simpleonpv:
+      enabled: true
+```
+
+```bash
+kubectl apply -f configmap.yaml
+```
+
+### گام 2: فعال‌سازی VPA بر روی یک پاد (Pod)
+
+1. ابتدا VPA Resource Definition (VPA CRD) را ایجاد کنید:
+
+```yaml
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: example-vpa
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind:       Deployment
+    name:       your-deployment-name
+```
+
+در اینجا `your-deployment-name` را با نام Deployment خود جایگزین کنید.
+
+2. سپس VPA را فعال کنید:
+
+```bash
+kubectl apply -f vpa.yaml
+```
+
+### گام 3: مشاهده وضعیت VPA
+
+برای مشاهده وضعیت VPA، از دستور زیر استفاده کنید:
+
+```bash
+kubectl get vpa
+```
+
+وضعیت VPA شامل مشخصاتی از تغییرات پیشنهادی برای پاد‌های شما خواهد بود.
+
+این گام‌ها کلیه مراحل مورد نیاز برای راه‌اندازی Virtual Pod Autoscaler (VPA) در Kubernetes هستند. با این روش، VPA تلاش می‌کند پارامترهای مورد نیاز هر پاد را بر اساس نیازهای زمان اجرا بهبود بخشد.
