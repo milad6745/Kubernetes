@@ -80,6 +80,13 @@ spec:
       port: 80
       targetPort: 8080
 ```
+```
+kubectl get svc
+NAME                  TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes            ClusterIP   10.96.0.1       <none>        443/TCP        6d1h
+my-nodeport-service   NodePort    10.96.227.182   <none>        80:32335/TCP   8s
+```
+
 pod port = target port
 
 service port = port
