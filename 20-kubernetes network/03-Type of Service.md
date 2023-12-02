@@ -9,8 +9,11 @@
 
 
   node port = clusterip + ...
+  
   load balancer = nodeport + ...
+  
   external name = load balancer + ...
+  
   
   
 ![image](https://github.com/milad6745/Kubernetes/assets/113288076/b91acb6b-5b0b-4f6f-89f1-8a236053f2c7)
@@ -27,7 +30,7 @@
 
 در Kubernetes، ClusterIP و NodePort دو نوع خدمات (Service) هستند که امکان دسترسی به پادها (Pods) درون کلاستر Kubernetes را فراهم می‌کنند. در زیر شرح هرکدام ارائه شده است:
 
-### 1. ClusterIP:
+## 1. ClusterIP:
 
 ClusterIP یک نوع خدمت است که به هر پاد درون کلاستر Kubernetes یک آدرس IP داخلی (internal IP) اختصاص می‌دهد. این IP فقط درون کلاستر قابل دسترسی است و از خارج کلاستر قابل دسترسی نیست. 
 
@@ -47,7 +50,7 @@ spec:
 
 در این مثال، `my-clusterip-service` یک ClusterIP Service است که به هر پاد با label `app: my-app` یک IP داخلی اختصاص می‌دهد. این IP می‌تواند از سایر پادها درون کلاستر برای ارتباط استفاده شود.
 
-### 2. NodePort:
+## 2. NodePort:
 
 NodePort نیز یک نوع خدمت است که به هر پاد یک آدرس IP و پورت درون کل نودهای کلاستر (Node) اختصاص می‌دهد. این آدرس IP و پورت از هر نودی درون کلاستر قابل دسترسی است. 
 
