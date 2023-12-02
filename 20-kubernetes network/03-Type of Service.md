@@ -81,8 +81,11 @@ spec:
       targetPort: 8080
 ```
 pod port = target port
+
 service port = port
+
 node port = node port به پورتی که روز پاد لیستن میشه میگن نود پورت
+
 
 
 ![image](https://github.com/milad6745/Kubernetes/assets/113288076/354626df-2dea-4e97-9aa3-c58d8d5a8ea1)
