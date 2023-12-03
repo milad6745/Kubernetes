@@ -49,3 +49,44 @@ spec:
 - در اینجا، مشخص شده است که پادهایی که برچسب `role=frontend` دارند می‌توانند به پورت 80 پادهای با برچسب `app=nginx` دسترسی پیدا کنند.
 
 Network Policy توسط محیط‌های Kubernetes مختلف پشتیبانی می‌شود و می‌تواند به عنوان یک ابزار مهم برای بهبود امنیت و کنترل ترافیک درون خوشه مورد استفاده قرار گیرد.
+
+
+# Example 1 )
+دو تا پاد در یک namespace بالا آورریم و سپس ارتباطاتشان را به هم چک کنیم :
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-1
+  namespace: default
+spec:
+  containers:
+  - name: container-1
+    image:  nginx:latest
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-2
+  namespace: default
+spec:
+  containers:
+  - name: container-2
+    image: nginx:latest
+```
+
+```
+kubectl get pod -o wide
+NAME                          READY   STATUS    RESTARTS   AGE    IP            NODE                           NOMINATED NODE   READINESS GATES
+pod-1                         1/1     Running   0          6s     10.244.0.35   delete-cluster-control-plane   <none>           <none>
+pod-2                         1/1     Running   0          6s     10.244.0.34   delete-cluster-control-plane   <none>           <none>
+```
+
+به داخل پاد 1 میرویم و پینگ   10.244.0.34 را بررسی میکنیم .
+
+```
+kubectl exec -it pod-1  ping 10.244.0.34
+64 bytes from 10.244.0.34: icmp_seq=1 ttl=63 time=0.108 ms
+```
+
