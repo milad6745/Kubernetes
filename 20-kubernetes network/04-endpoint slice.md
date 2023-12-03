@@ -1,3 +1,17 @@
+پشت هر سرویس یک سری پاد هستند لیست پار ها در End point ذخیره میشود.
+سرویس Endpoint Slice جدیدتر از Endpoint است و داره جایگزین میشه .
+
+```
+kubectl get endpoints
+NAME                  ENDPOINTS         AGE
+kubernetes            172.18.0.3:6443   7d1h
+
+kubectl get endpointslices.discovery.k8s.io
+NAME                        ADDRESSTYPE   PORTS     ENDPOINTS    AGE
+kubernetes                  IPv4          6443      172.18.0.3   7d1h
+```
+
+
 در Kubernetes، یک EndpointSlice شامل ارجاع به مجموعه‌ای از نقاط انتهای شبکه (network endpoints) است. سیستم کنترل به صورت خودکار EndpointSlices را برای هر خدمت Kubernetes که یک انتخاب‌گر (selector) مشخص دارد، ایجاد می‌کند. این EndpointSlices ارجاعاتی به تمام پادهایی که با انتخاب‌گر خدمت تطابق دارند را شامل می‌شوند. EndpointSlices نقاط انتهای شبکه را با ترکیب‌های منحصر به فردی از پروتکل، شماره پورت، و نام خدمت گروه‌بندی می‌کنند. نام یک شیء EndpointSlice باید یک نام زیردامنه DNS معتبر باشد.
 
 به عنوان یک مثال، در زیر یک شیء EndpointSlice نمونه آورده شده است که متعلق به یک خدمت Kubernetes نمونه است:
