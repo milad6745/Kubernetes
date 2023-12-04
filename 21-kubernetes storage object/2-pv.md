@@ -22,19 +22,61 @@
 
 یک نمونه ساده از یک تعریف PV در Kubernetes به صورت YAML:
 
+حالا که یک PersistentVolume (PV) با نام `example-pv` ایجاد کرده‌اید، می‌توانید یک PersistentVolumeClaim (PVC) بسازید و از آن در یک Pod استفاده کنید. در اینجا یک مثال از یک PVC و Pod برای استفاده از PV شما آورده شده است:
+
+### 1. ایجاد PersistentVolumeClaim (PVC):
+
+
 ```yaml
 apiVersion: v1
-kind: PersistentVolume
+kind: PersistentVolumeClaim
 metadata:
-  name: example-pv
+  name: example-pvc
 spec:
-  capacity:
-    storage: 1Gi
-  volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
-  hostPath:
-    path: "/mnt/data"
+  resources:
+    requests:
+      storage: 1Gi
 ```
 
-در این مثال، یک PV به نام `example-pv` با ظرفیت 1 گیگابایت، دسترسی به یک دایرکتوری محلی با مسیر "/mnt/data" ایجاد شده است.
+در این مثال، PVC با نام `example-pvc` با دسترسی به `ReadWriteOnce` و ظرفیت 1 گیگابایت ایجاد شده است.
+
+### 2. ایجاد Pod:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-pod
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx
+    volumeMounts:
+    - mountPath: "/usr/share/nginx/html"
+      name: storage-volume
+  volumes:
+  - name: storage-volume
+    persistentVolumeClaim:
+      claimName: example-pvc
+```
+kubectl describe pod
+
+Volumes:
+  storage-volume:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  example-pvc
+    ReadOnly:   false
+  kube-api-access-bzxnk:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+```
+
+در این مثال، یک Pod با نام `example-pod` و یک کانتینر از تصویر `nginx` ایجاد شده است. این Pod از یک Volume به نام `storage-volume` با استفاده از PVC به نام `example-pvc` استفاده می‌کند. این PVC به PV شما (`example-pv`) متصل شده و حجم مشخص شده در PV را به Pod ارائه می‌دهد.
+
+حالا می‌توانید این Pod را با استفاده از دستور `kubectl apply -f pod-manifest.yaml` به کلاستر Kubernetes اعمال کرده و عملکرد آن را بررسی کنید.
+```
