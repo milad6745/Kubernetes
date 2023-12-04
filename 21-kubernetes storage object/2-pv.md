@@ -61,8 +61,8 @@ spec:
     persistentVolumeClaim:
       claimName: example-pvc
 ```
+```
 kubectl describe pod
-
 Volumes:
   storage-volume:
     Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
@@ -79,4 +79,3 @@ Volumes:
 در این مثال، یک Pod با نام `example-pod` و یک کانتینر از تصویر `nginx` ایجاد شده است. این Pod از یک Volume به نام `storage-volume` با استفاده از PVC به نام `example-pvc` استفاده می‌کند. این PVC به PV شما (`example-pv`) متصل شده و حجم مشخص شده در PV را به Pod ارائه می‌دهد.
 
 حالا می‌توانید این Pod را با استفاده از دستور `kubectl apply -f pod-manifest.yaml` به کلاستر Kubernetes اعمال کرده و عملکرد آن را بررسی کنید.
-```
