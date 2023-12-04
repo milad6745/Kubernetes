@@ -61,7 +61,8 @@ spec:
     persistentVolumeClaim:
       claimName: example-pvc
 ```
-```
+
+```yaml
 kubectl describe pod
 Volumes:
   storage-volume:
