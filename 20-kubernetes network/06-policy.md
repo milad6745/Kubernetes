@@ -90,3 +90,25 @@ kubectl exec -it pod-1  ping 10.244.0.34
 64 bytes from 10.244.0.34: icmp_seq=1 ttl=63 time=0.108 ms
 ```
 
+حالا با ایجاد یک network policy دسترسی بیسن این دو پاد را قطع میکنیم .
+
+```
+# network-policy.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-pod-access
+  namespace: your-namespace
+spec:
+  podSelector:
+    matchLabels:
+      app: pod-1
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: pod-2
+```
+
