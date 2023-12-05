@@ -80,3 +80,78 @@ Volumes:
 در این مثال، یک Pod با نام `example-pod` و یک کانتینر از تصویر `nginx` ایجاد شده است. این Pod از یک Volume به نام `storage-volume` با استفاده از PVC به نام `example-pvc` استفاده می‌کند. این PVC به PV شما (`example-pv`) متصل شده و حجم مشخص شده در PV را به Pod ارائه می‌دهد.
 
 حالا می‌توانید این Pod را با استفاده از دستور `kubectl apply -f pod-manifest.yaml` به کلاستر Kubernetes اعمال کرده و عملکرد آن را بررسی کنید.
+
+
+## Example
+
+برای ایجاد یک `PersistentVolume` (PV) و متصل کردن یک `PersistentVolumeClaim` (PVC) و یک `Pod` به آن، ابتدا یک مانیفست برای هرکدام از اینها ایجاد کنید. در زیر یک مثال ارائه شده است:
+
+### 1. ایجاد PersistentVolume (pv.yaml):
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: example-pv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
+```
+
+### 2. ایجاد PersistentVolumeClaim (pvc.yaml):
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: example-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+```
+
+### 3. ایجاد Pod (pod.yaml):
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-pod
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx
+    volumeMounts:
+    - mountPath: "/usr/share/nginx/html"
+      name: storage-volume
+  volumes:
+  - name: storage-volume
+    persistentVolumeClaim:
+      claimName: example-pvc
+```
+
+### 4. اعمال مانیفست‌ها:
+
+```bash
+kubectl apply -f pv.yaml
+kubectl apply -f pvc.yaml
+kubectl apply -f pod.yaml
+```
+
+در این مثال:
+
+- `PersistentVolume` با نام `example-pv` ایجاد می‌شود که از نوع `hostPath` و با ظرفیت 1 گیگابایت است. مسیر فایل‌ها در اینجا به `/mnt/data` تنظیم شده است.
+
+- `PersistentVolumeClaim` با نام `example-pvc` ایجاد می‌شود که از `PersistentVolume` مرتبط (`example-pv`) استفاده می‌کند.
+
+- `Pod` با نام `example-pod` ایجاد می‌شود که از `PersistentVolumeClaim` (`example-pvc`) به عنوان یک VolumeMount استفاده می‌کند و این Volume را در مسیر `/usr/share/nginx/html` درون کانتینر Mount می‌کند.
+
+با اجرای این مراحل، یک `Pod` با یک `PersistentVolume` متصل خواهد شد. مطمئن شوید که مسیر `/mnt/data` بر روی کلاستر Kubernetes شما وجود دارد و مجوزهای لازم برای آن تنظیم شده است.
