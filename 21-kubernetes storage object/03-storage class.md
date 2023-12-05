@@ -1,6 +1,7 @@
 # storage class
 
 در Kubernetes، `StorageClass` یک منبع تخصیص داده به عنوان PersistentVolume (PV) را تعریف می‌کند. `StorageClass` به کاربران اجازه می‌دهد تا برای استفاده از ذخیره‌سازی دائمی بدون نیاز به تنظیمات مستقیم بر روی `PersistentVolume` استفاده کنند.
+به واسطه Storage class والیوم PV خودش ایجاد میشه و نیازی به کانفیگ ادمین نیست .
 ---
 
 ## Diff Between storage class and PV
@@ -125,3 +126,14 @@ kubectl apply -f pod.yaml
 یک `Pod` با نام "my-pod" ایجاد شده است که به `PersistentVolumeClaim` "my-pvc" متصل شده و از فضای ذخیره‌سازی درون کانتینر استفاده می‌کند.
 
 با اجرای این مراحل، یک `Pod` با یک `PersistentVolumeClaim` که از `StorageClass` مشخصی استفاده می‌کند ایجاد می‌شود.
+
+```
+kubectl get pv
+example-pv                                 1Gi        RWO            Retain           Available                                                  24h
+pvc-198a3865-3cd5-4e70-9242-ab3d1c138e12   1Gi        RWO            Delete           Bound       default/example-pvc    standard                22h
+┌──(root💀kali)-[/cache]
+└─# kubectl get pvc
+NAME           STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+example-pvc    Bound    pvc-198a3865-3cd5-4e70-9242-ab3d1c138e12   1Gi        RWO            standard       22h
+```
+
