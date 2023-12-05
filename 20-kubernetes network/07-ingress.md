@@ -11,4 +11,8 @@
 ![image](https://github.com/milad6745/Kubernetes/assets/113288076/5b24c8e2-47e9-4e03-abbd-c96c7a9822d8)
 
 
-....
+.
+.
+.
+.
+.
