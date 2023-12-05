@@ -3,11 +3,18 @@
 
 ویژگی‌های مهم `StorageClass` عبارتند از:
 
-1. **Provisioner:** نحوه تأمین فضای ذخیره‌سازی. برای مثال، یک provisioner می‌تواند فضای ذخیره‌سازی را در یک Cloud Provider فراهم کند (برای مثال، در Azure یا AWS) یا از نوع محلی (بر اساس فایل‌های محلی) باشد.
+**Provisioner:**
 
-2. **Parameters:** تنظیمات اختیاری که به provisioner ارسال می‌شوند.
+نحوه تأمین فضای ذخیره‌سازی. برای مثال، یک provisioner می‌تواند فضای ذخیره‌سازی را در یک Cloud Provider فراهم کند (برای مثال، در Azure یا AWS) یا از نوع محلی (بر اساس فایل‌های محلی) باشد.
 
-3. **Reclaim Policy:** نحوه مدیریت `PersistentVolume` ها بعد از حذف `PersistentVolumeClaim`. می‌تواند به سه حالت "Retain" (نگهداری داده‌ها)، "Delete" (حذف داده‌ها) یا "Recycle" (پاکسازی داده‌ها) تنظیم شود.
+   **Parameters:**
+  
+تنظیمات اختیاری که به provisioner ارسال می‌شوند.
+
+**Reclaim Policy:**
+  
+نحوه مدیریت `PersistentVolume` ها بعد از حذف `PersistentVolumeClaim`. می‌تواند به سه حالت "Retain" (نگهداری داده‌ها)، "Delete" (حذف داده‌ها) یا "Recycle" (پاکسازی داده‌ها) تنظیم شود.
+    
 
 ### مثال ایجاد یک StorageClass:
 
