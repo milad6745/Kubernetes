@@ -84,6 +84,10 @@ Volumes:
 
 ## Example
 
+
+ برای اینکه بتوان از PVها استفاده کرد می‌بایست از persistentVolumeClaim استفاده کرد. به عبارت دیگر نمی‌توان در ساختار Pod به صورت مستقیم PV را فراخوانی و از آنها استفاده کرد. همانطور که توضیحات ارائه شده PV‌های به صورت cluster wide است و توسط ادمین‌ها در سطح کلاستر تعریف می‌شوند، و برای اینکه بتوان از PV‌ها برای والیوم‌ها در ساختار پاد استفاده کرد، می‌بایست از مفهومی‌به نام persistentVolumeClaim یا PVC بهره مند شد. به بیانی دیگر کاربر در سطح کلاستر کوبرنتیز PVC می‌سازد و با کمک PVC می‌تواند PV که توسط ادمین ساخته شده است را فراخانی کند. همچنین لازم به ذکر است که PVC به صورتname space base است، یعنی هر کاربری می‌تواند در name space جداگانه خود اقدام به ساخت PVC مورد نیاز خود کند.
+ 
+
 برای ایجاد یک `PersistentVolume` (PV) و متصل کردن یک `PersistentVolumeClaim` (PVC) و یک `Pod` به آن، ابتدا یک مانیفست برای هرکدام از اینها ایجاد کنید. در زیر یک مثال ارائه شده است:
 
 ### 1. ایجاد PersistentVolume (pv.yaml):
@@ -146,6 +150,15 @@ kubectl apply -f pvc.yaml
 kubectl apply -f pod.yaml
 ```
 
+```
+kubectl get pv
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM                  STORAGECLASS   REASON   AGE
+example-pv                                 1Gi        RWO            Retain           Available                                                  21h
+
+kubectl get pvc
+NAME           STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+example-pvc    Bound    pvc-198a3865-3cd5-4e70-9242-ab3d1c138e12   1Gi        RWO            standard       20h
+```
 در این مثال:
 
 - `PersistentVolume` با نام `example-pv` ایجاد می‌شود که از نوع `hostPath` و با ظرفیت 1 گیگابایت است. مسیر فایل‌ها در اینجا به `/mnt/data` تنظیم شده است.
