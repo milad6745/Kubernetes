@@ -3,6 +3,7 @@
  در Kubernetes، `StorageClass` یک منبع تخصیص داده به عنوان PersistentVolume (PV) را تعریف می‌کند. `StorageClass` به کاربران اجازه می‌دهد تا برای استفاده از ذخیره‌سازی دائمی بدون نیاز به تنظیمات مستقیم بر روی `PersistentVolume` استفاده کنند.
 
 به واسطه Storage class والیوم PV خودش ایجاد میشه و نیازی به کانفیگ ادمین نیست .
+استوریج کلاس ها به عنوان Dynamic volume provisioning بر اساس PVC که ما میسازیم خودش PV را میسازد. 
 
 ## Diff Between storage class and PV
 
