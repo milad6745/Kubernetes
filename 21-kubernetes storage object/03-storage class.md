@@ -1,6 +1,17 @@
 # storage class
 در Kubernetes، `StorageClass` یک منبع تخصیص داده به عنوان PersistentVolume (PV) را تعریف می‌کند. `StorageClass` به کاربران اجازه می‌دهد تا برای استفاده از ذخیره‌سازی دائمی بدون نیاز به تنظیمات مستقیم بر روی `PersistentVolume` استفاده کنند.
 
+## Diff Between storage class and PV
+
+### PV 
+به صورت دستی توسط کاربر ایجاد می‌شود و یک PV خاص به یک PVC خاص متصل می‌شود.
+
+### StorageClass
+    
+این امکان را فراهم می‌کند تا به صورت دینامیک بر اساس نیازهای کاربران PV ایجاد شود. کاربران با ایجاد یک PVC و استفاده از یک StorageClass، به سرعت و بدون نیاز به دخالت دستی، به فضایذخیره‌سازی دسترسی پیدا کنند.
+
+به طور کلی، استفاده از StorageClass به منظور ایجاد یک سیاست دینامیک و انعطاف‌پذیر در مدیریت فضای ذخیره‌سازی توصیه می‌شود
+
 ویژگی‌های مهم `StorageClass` عبارتند از:
 
 **Provisioner:**
@@ -103,10 +114,10 @@ kubectl apply -f pod.yaml
 
 در این مثال:
 
-- یک `StorageClass` به نام "fast" ایجاد شده است که از provisioner مربوط به AWS EBS (`kubernetes.io/aws-ebs`) استفاده می‌کند. ظرفیت درخواستی برای هر `PersistentVolumeClaim` تنظیم شده است.
+یک `StorageClass` به نام "fast" ایجاد شده است که از provisioner مربوط به AWS EBS (`kubernetes.io/aws-ebs`) استفاده می‌کند. ظرفیت درخواستی برای هر `PersistentVolumeClaim` تنظیم شده است.
 
-- یک `PersistentVolumeClaim` با نام "my-pvc" ایجاد شده است که به `StorageClass` "fast" متصل شده و 1 گیگابایت فضای ذخیره‌سازی درخواست می‌کند.
+یک `PersistentVolumeClaim` با نام "my-pvc" ایجاد شده است که به `StorageClass` "fast" متصل شده و 1 گیگابایت فضای ذخیره‌سازی درخواست می‌کند.
 
-- یک `Pod` با نام "my-pod" ایجاد شده است که به `PersistentVolumeClaim` "my-pvc" متصل شده و از فضای ذخیره‌سازی درون کانتینر استفاده می‌کند.
+یک `Pod` با نام "my-pod" ایجاد شده است که به `PersistentVolumeClaim` "my-pvc" متصل شده و از فضای ذخیره‌سازی درون کانتینر استفاده می‌کند.
 
 با اجرای این مراحل، یک `Pod` با یک `PersistentVolumeClaim` که از `StorageClass` مشخصی استفاده می‌کند ایجاد می‌شود.
