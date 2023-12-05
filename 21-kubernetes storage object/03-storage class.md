@@ -38,3 +38,75 @@ reclaimPolicy: Retain
 - `reclaimPolicy`: نحوه مدیریت `PersistentVolume` بعد از حذف `PersistentVolumeClaim` (در اینجا `Retain`).
 
 می‌توانید از `StorageClass` در `PersistentVolumeClaim` استفاده کنید تا به صورت خودکار `PersistentVolume` برای شما ایجاد شود. به عبارت دیگر، `StorageClass` به کاربران این امکان را می‌دهد که بدون نگرانی از جزئیات فیزیکی ذخیره‌سازی، از منابع تخصیص داده شده به آنها استفاده کنند.
+
+
+## Example
+
+برای ایجاد یک `StorageClass` و یک `PersistentVolumeClaim` (PVC) که به آن متصل شود، می‌توانید از مثال زیر استفاده کنید:
+
+### 1. ایجاد StorageClass (storage-class.yaml):
+
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: fast
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp2
+reclaimPolicy: Retain
+```
+
+### 2. ایجاد PersistentVolumeClaim (pvc.yaml):
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: fast
+  resources:
+    requests:
+      storage: 1Gi
+```
+
+### 3. ایجاد Pod که به PersistentVolumeClaim متصل شود (pod.yaml):
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+    volumeMounts:
+    - mountPath: "/usr/share/nginx/html"
+      name: my-storage
+  volumes:
+  - name: my-storage
+    persistentVolumeClaim:
+      claimName: my-pvc
+```
+
+### 4. اعمال مانیفست‌ها:
+
+```bash
+kubectl apply -f storage-class.yaml
+kubectl apply -f pvc.yaml
+kubectl apply -f pod.yaml
+```
+
+در این مثال:
+
+- یک `StorageClass` به نام "fast" ایجاد شده است که از provisioner مربوط به AWS EBS (`kubernetes.io/aws-ebs`) استفاده می‌کند. ظرفیت درخواستی برای هر `PersistentVolumeClaim` تنظیم شده است.
+
+- یک `PersistentVolumeClaim` با نام "my-pvc" ایجاد شده است که به `StorageClass` "fast" متصل شده و 1 گیگابایت فضای ذخیره‌سازی درخواست می‌کند.
+
+- یک `Pod` با نام "my-pod" ایجاد شده است که به `PersistentVolumeClaim` "my-pvc" متصل شده و از فضای ذخیره‌سازی درون کانتینر استفاده می‌کند.
+
+با اجرای این مراحل، یک `Pod` با یک `PersistentVolumeClaim` که از `StorageClass` مشخصی استفاده می‌کند ایجاد می‌شود.
