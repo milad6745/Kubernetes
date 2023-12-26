@@ -9,6 +9,7 @@
 ```bash
 kubectl edit  deployment.app -n kube-system coredn
 
+
 spec:
   progressDeadlineSeconds: 600
   replicas: 2 --> 4
