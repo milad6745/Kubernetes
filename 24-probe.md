@@ -49,7 +49,7 @@ spec:
     spec:
       containers:
       - name: example-container
-        image: your-container-image:tag
+        image: nginx:latest
         ports:
         - containerPort: 80
         readinessProbe:
@@ -75,5 +75,3 @@ spec:
 - `livenessProbe`
 -
 همچنین تعیین می‌کند که Kubernetes باید هر 20 ثانیه یک بار به آدرس `/healthz` در پورت 80 ارسال درخواست HTTP کند و اگر درخواست موفق نباشد (کد وضعیت غیر 200)، Container به عنوان زنده در نظر گرفته نخواهد شد و ممکن است Kubernetes تصمیم بگیرد که Container را دوباره راه‌اندازی کند. این Probe بعد از 10 ثانیه از زمان راه‌اندازی Container فعال می‌شود.
-
-لطفاً مقادیر مربوط به `your-container-image:tag` را با اطلاعات مربوط به تصویر Container خود جایگزین کنید. همچنین می‌توانید مسیر `/healthz` و پورت را بر اساس نیازهای خود تغییر دهید.
