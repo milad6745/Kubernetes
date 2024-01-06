@@ -29,7 +29,7 @@ Liveness:     http-get https://172.18.0.3:6443/livez delay=10s timeout=15s perio
 Readiness:    http-get https://172.18.0.3:6443/readyz delay=0s timeout=15s period=1s #success=1 #failure=3
 ```
 
-### 'create deploymet with liveness & rediness'
+### `create deploymet with liveness & rediness`
 برای اجرای یک Deployment در Kubernetes که Probe‌های Liveness و Readiness دارد، شما باید یک فایل YAML تعریف کنید و سپس از آن استفاده کنید. در زیر یک نمونه Deployment با Probe‌های Liveness و Readiness آورده شده است:
 
 ```yaml
