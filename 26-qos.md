@@ -17,6 +17,8 @@
    - **معنی:**
      در این سطح، پاد‌ها هم قثrequest منابع دارند و هم محدودیت (limits) دارند.
      در این نوع request , limist برای رم و CPU یکسان است و به این نوع گارانتی گویند
+
+     
 ![image](https://github.com/milad6745/Kubernetes/assets/113288076/be9ac8ab-3cb1-4058-ac29-1bc297bcc00c)
 
 
