@@ -90,6 +90,13 @@ my-pod                             0m           7Mi
 
    سپس در YAML، به بخش‌های `resources.requests` و `resources.limits` نگاه کنید تا میزان منابع مصرفی و تخصیص یافته به کانتینرها را بررسی کنید.
 
+### `check resource nodes`
+```
+kubectl top node
+NAME                           CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%
+delete-cluster-control-plane   326m         4%     2102Mi          26%
+```
+
 
 ### `reserve kubelet resource`
 
