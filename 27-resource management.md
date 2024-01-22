@@ -21,3 +21,72 @@
 --system-reserved is set to cpu=500m,memory=1Gi, ephemeral-storage=1Gi
 --eviction-hard is set to memory.available<500Mi, nodefs.available<10%
 ```
+
+###`Set limit range fordefault namespace`
+```
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: my-limit-range
+  namespace: default
+spec:
+  limits:
+  - type: Container
+    max:
+      memory: 256Mi
+      cpu: 500m
+    min:
+      memory: 64Mi
+      cpu: 100m
+  - type: PersistentVolumeClaim
+    max:
+      storage: 1Gi
+  - type: PersistentVolumeClaim
+    min:
+      storage: 100Mi
+```
+
+### `Check resource POD`
+
+برای چک کردن میزان منابع (ریسورس‌ها) تعیین شده برای یک پاد در Kubernetes، می‌توانید از دو روش استفاده کنید: استفاده از دستورهای `kubectl` و نیز نگاه به توصیفی YAML (manifest) مربوط به پاد.
+
+### استفاده از دستورهای `kubectl`:
+
+1. **استفاده از `kubectl describe pod`:**
+   این دستور اطلاعات جزئی و جامعی از پاد را نشان می‌دهد، از جمله میزان منابع مصرفی توسط کانتینرها. به عنوان مثال:
+
+   ```bash
+   kubectl describe pod <نام-پاد>
+   ```
+
+   این دستور اطلاعات جزئی در مورد پاد را نمایش می‌دهد، از جمله نیازمندی‌ها و تخصیص‌های منابع.
+
+2. **استفاده از `kubectl top pod`:**
+   این دستور مشخصات مصرف منابع (مانند CPU و حافظه) را برای پادهای درحال اجرا نشان می‌دهد. برای نمونه:
+
+   ```bash
+kubectl top pod <نام-پاد>
+NAME                               CPU(cores)   MEMORY(bytes)
+example-deployment-5c78b98-cvgfz   1m           7Mi
+example-pod                        0m           7Mi
+example-pod-emptydir               0m           7Mi
+example-pod1                       0m           7Mi
+hello-world-8977c54c9-gmlnh        0m           0Mi
+hello-world-8977c54c9-pg22t        0m           1Mi
+my-pod                             0m           7Mi
+   ```
+
+   این دستور اطلاعات مربوط به مصرف منابع را به صورت زمان واقعی نشان می‌دهد.
+
+### نگاه به YAML توصیف پاد:
+
+1. **استفاده از `kubectl get pod -o yaml`:**
+   این دستور یک نمایه YAML از وضعیت کنونی پادها را نشان می‌دهد. با این دستور، می‌توانید به صورت مستقیم به توصیف پاد دسترسی پیدا کنید و بررسی کنید که چه میزان از منابع تخصیص یافته است. به عنوان مثال:
+
+   ```bash
+   kubectl get pod <نام-پاد> -o yaml
+   ```
+
+   سپس در YAML، به بخش‌های `resources.requests` و `resources.limits` نگاه کنید تا میزان منابع مصرفی و تخصیص یافته به کانتینرها را بررسی کنید.
+
+برای هر دو روش، اطلاعات مصرف منابع در بخش‌هایی از خروجی نشان داده می‌شوند که با `resources.requests` و `resources.limits` شروع می‌شوند. این بخش‌ها نشان‌دهنده میزان حداقل (requests) و حداکثر (limits) منابع تخصیص داده شده به پاد هستند.
