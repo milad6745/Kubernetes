@@ -64,7 +64,8 @@ spec:
 2. **استفاده از `kubectl top pod`:**
    این دستور مشخصات مصرف منابع (مانند CPU و حافظه) را برای پادهای درحال اجرا نشان می‌دهد. برای نمونه:
 
-   ```bash
+```bash
+
 kubectl top pod <نام-پاد>
 NAME                               CPU(cores)   MEMORY(bytes)
 example-deployment-5c78b98-cvgfz   1m           7Mi
@@ -74,7 +75,7 @@ example-pod1                       0m           7Mi
 hello-world-8977c54c9-gmlnh        0m           0Mi
 hello-world-8977c54c9-pg22t        0m           1Mi
 my-pod                             0m           7Mi
-   ```
+```
 
    این دستور اطلاعات مربوط به مصرف منابع را به صورت زمان واقعی نشان می‌دهد.
 
