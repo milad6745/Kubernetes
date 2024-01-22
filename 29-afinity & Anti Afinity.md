@@ -86,3 +86,40 @@
 در این مثال‌ها، `topologyKey` تعیین می‌کند که به کمک کدام ویژگی (برچسب یا توپولوژی) قرار است این تطابق انجام شود. `requiredDuringSchedulingIgnoredDuringExecution` نیز مشخص می‌کند که این تطابق در زمان زمانبندی Pod‌ها لازم است و در طول اجرا نباید نادیده گرفته شود.
 
 استفاده از Interpod Affinity و Anti-Affinity به شما این امکان را می‌دهد که تنظیمات مختلفی را بر روی Pod‌ها اعمال کنید تا مدیریت دقیق‌تری بر روی توزیع Pod‌ها در کلاستر داشته باشید. این امکان به شما کمک می‌کند تا اطمینان حاصل کنید که Pod‌های مهم در کنار یا دور از یکدیگر قرار می‌گیرند و یا برعکس، Pod‌های نادرست یا تداخل‌آفرین در نزدیکی یکدیگر نمی‌افتند.
+
+
+
+###`Example`
+
+برای اجرای یک محیط که شامل Redis، Nginx، و یک برنامه Node.js با node affinity در یک پاد Kubernetes استفاده می‌شود، شما به دنبال ایجاد یک فایل YAML برای تعریف منابع Kubernetes خود هستید. در ادامه یک نمونه YAML برای این منظور آورده شده است:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-app-pod
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - my-node-selector-value
+  containers:
+    - name: redis-container
+      image: redis:latest
+    - name: nginx-container
+      image: nginx:latest
+    - name: nodejs-container
+      image: your-nodejs-image:latest
+```
+
+لطفاً توجه داشته باشید که:
+
+1. `my-app-pod` نام پاد شما است. شما می‌توانید این نام را به دلخواه تغییر دهید.
+2. `my-node-selector-value` یک مقدار برچسب nodeSelector است که به عنوان معیار برای انتخاب یک نود برای اجرای پاد مورد استفاده قرار می‌گیرد. این مقدار باید با مقدار تنظیم شده برای برچسب nodeSelector بر روی نودهای خود شما هماهنگ باشد.
+
+پس از ایجاد فایل YAML خود، می‌توانید آن را با دستور `kubectl apply -f your-file.yaml` اجرا کنید تا پاد ایجاد شود و برنامه‌ها در نود مورد نظر اجرا شوند.
