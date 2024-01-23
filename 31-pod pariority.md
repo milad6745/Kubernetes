@@ -70,3 +70,11 @@ description: "High Priority Class"
 ```
 
 در این مثال، یک priority class با نام "high-priority" تعریف شده است که از `Priority` با مقدار `1000000` استفاده می‌کند. این priority class می‌تواند به پادها اختصاص داده شود و پادهایی که از این کلاس استفاده می‌کنند، در تخصیص منابع اولویت بیشتری دارند.
+
+
+### `priority class`
+```
+kubectl get priorityclasses
+NAME                      VALUE        GLOBAL-DEFAULT   AGE
+high-priority             1000000      false            3s
+```
