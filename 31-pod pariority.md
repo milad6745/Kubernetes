@@ -78,3 +78,13 @@ kubectl get priorityclasses
 NAME                      VALUE        GLOBAL-DEFAULT   AGE
 high-priority             1000000      false            3s
 ```
+
+### `default pariority class`
+
+```
+kubectl get priorityclasses
+NAME                      VALUE        GLOBAL-DEFAULT   AGE
+high-priority             1000000      false            3s
+system-cluster-critical   2000000000   false            57d
+system-node-critical      2000001000   false            57d
+```
