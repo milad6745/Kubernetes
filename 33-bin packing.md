@@ -14,3 +14,5 @@
 
 ددر این شکل مشاهده میکنیم که در روی هیچ نودی 300 VCPU و 600 مموری خالی نیست . پس میار با جابجایی پاد هایی به اولویت پایین برای این پاد جایی باز میکند.
 ![image](https://github.com/milad6745/Kubernetes/assets/113288076/58d4a2d1-5e65-4dbb-a4f7-887860d36000)
+
+![image](https://github.com/milad6745/Kubernetes/assets/113288076/088a51df-a0e6-476c-a3e3-55e3bdaf22a0)
