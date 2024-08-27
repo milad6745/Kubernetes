@@ -2,6 +2,10 @@
 
 ![cqud3rjkss361](https://github.com/milad6745/Kubernetes/assets/113288076/1b2825b0-d12f-469f-91ba-796feba9c8c9)
 
+![image](https://github.com/user-attachments/assets/7acdf9cb-8dc7-447d-9b7b-7499a8a8c7ca)
+
+
+
 معماری Kubernetes شامل مجموعه‌ای از اجزا است که با هم تعامل می‌کنند تا مدیریت و اجرای کانتینرهای برنامه‌ها را در یک محیط توزیع‌شده فراهم کنند. در زیر توضیح مختصری از اجزا و نحوه عملکرد آنها در معماری Kubernetes آورده شده است:
 
 **Master Node (نود اصلی):**
