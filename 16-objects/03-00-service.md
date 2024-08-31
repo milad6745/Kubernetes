@@ -89,6 +89,16 @@ kubectl apply -f nginx-service.yaml
 
 سپس می‌توانید سرویس را با دستور زیر بررسی کنید:
 
+```yaml
+kubectl get all
+NAME                READY   STATUS             RESTARTS        AGE
+pod/nginx-service   1/1     Running            0               34m
+
+
+NAME                    TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+service/nginx-service   NodePort    10.96.211.178   <none>        80:30240/TCP   35m
+```
+
 ```bash
 kubectl get services
 ```
