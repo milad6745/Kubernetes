@@ -1,5 +1,14 @@
 ## kube-public namespace
 
+```
+kubectl get ns
+NAME                 STATUS   AGE
+default              Active   11d
+kube-node-lease      Active   11d
+kube-public          Active   11d
+kube-system          Active   11d
+```
+
 در Kubernetes، namespace `kube-public` یک namespace خاص است که به صورت پیش‌فرض در هر کلاستر Kubernetes ایجاد می‌شود. این namespace برای قرار دادن منابعی استفاده می‌شود که باید به صورت عمومی و بدون نیاز به احراز هویت، در دسترس تمام کاربران کلاستر باشد.  
 
 ### ویژگی‌های کلیدی `kube-public`:
