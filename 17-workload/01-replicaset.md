@@ -66,12 +66,20 @@ kubectl get rs
 NAME             DESIRED   CURRENT   READY   AGE
 hello-world-rs   4         4         4       17h
 ```
-```bash
-kubectl get pod
-NAME                   READY   STATUS    RESTARTS       AGE
-hello-world-rs-49jq4   1/1     Running   17 (31m ago)   17h
-hello-world-rs-f5kx5   1/1     Running   17 (31m ago)   17h
-hello-world-rs-lfq69   1/1     Running   17 (31m ago)   17h
-hello-world-rs-pc9gb   1/1     Running   17 (31m ago)   17h
+
+```
+kubectl get all
+NAME                         READY   STATUS             RESTARTS        AGE
+pod/hello-world-rs-f269z     1/1     Running            0               17s
+pod/hello-world-rs-f9vtp     1/1     Running            0               17s
+pod/hello-world-rs-qzvct     1/1     Running            0               17s
+pod/hello-world-rs-rj4wf     1/1     Running            0               17s
+
+NAME                    TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+
+
+NAME                               DESIRED   CURRENT   READY   AGE
+replicaset.apps/hello-world-rs     4         4         4       17s
+
 ```
 
