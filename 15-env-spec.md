@@ -26,7 +26,7 @@ spec:
         image: my-web-app:latest
         ports:
         - containerPort: 80
-       *env:
+       env:
         - name: DB_HOST
           value: "mysql-service"
         - name: DB_PORT
@@ -37,7 +37,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mysql-secret
-              key: password*
+              key: password
         - name: DB_NAME
           value: "mydatabase"
 ```
