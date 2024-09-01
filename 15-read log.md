@@ -1,5 +1,6 @@
 ## read logs
 kubectl logs -f  pod/nginx-deployment-576477d75f-4dj69 
+
 kubectl logs   pod/nginx-deployment-576477d75f-4dj69 
 
 ```
