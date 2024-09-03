@@ -93,3 +93,103 @@ labeles:
 ....
 size=large
 ```
+
+## Example
+
+برای ساخت دو Pod در Kubernetes که با استفاده از برچسب‌ها (Labels) و انتخاب‌گرها (Selectors) به هم متصل شوند، می‌توانیم یک سرویس (Service) ایجاد کنیم. سرویس‌ها با استفاده از برچسب‌ها، Podها را کشف کرده و آنها را به هم متصل می‌کنند. در این مثال، ما دو Pod با برچسب‌های مشابه ایجاد می‌کنیم و سپس با استفاده از یک سرویس، آنها را به هم متصل می‌کنیم.
+
+### مراحل کار:
+
+1. **ایجاد دو Pod با برچسب‌های مشابه**
+2. **ایجاد یک سرویس (Service) برای اتصال Podها**
+
+### 1. ایجاد دو Pod با برچسب‌های مشابه
+
+فرض کنیم می‌خواهیم دو Pod با برچسب `app=example` ایجاد کنیم.
+
+**Pod اول (YAML):**
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-one
+  labels:
+    app: example
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+```
+
+**Pod دوم (YAML):**
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-two
+  labels:
+    app: example
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+```
+
+برای ایجاد این Podها، فایل‌های YAML را ایجاد کرده و آنها را اجرا کنید:
+
+```bash
+kubectl apply -f pod-one.yaml
+kubectl apply -f pod-two.yaml
+```
+
+### 2. ایجاد یک سرویس برای اتصال Podها
+
+اکنون می‌توانیم یک سرویس ایجاد کنیم که از برچسب `app=example` برای اتصال به این دو Pod استفاده کند. سرویس‌ها معمولاً برای load balancing و expose کردن Podها به کار می‌روند، اما در اینجا هدف ما صرفاً اتصال این دو Pod با هم است.
+
+**Service (YAML):**
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-service
+spec:
+  selector:
+    app: example
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+```
+
+این سرویس به طور خودکار تمامی Podهایی که دارای برچسب `app=example` هستند را انتخاب و آنها را به یکدیگر متصل می‌کند. در این مثال، سرویس ترافیک ورودی روی پورت 80 را به پورت 80 روی Podهای انتخاب‌شده هدایت می‌کند.
+
+برای ایجاد این سرویس، فایل YAML را اجرا کنید:
+
+```bash
+kubectl apply -f service.yaml
+```
+
+### بررسی اتصال Podها
+
+بعد از ایجاد سرویس، می‌توانید سرویس و Podها را بررسی کنید تا اطمینان حاصل شود که سرویس به درستی Podها را انتخاب کرده است:
+
+```bash
+kubectl get svc example-service
+kubectl describe svc example-service
+kubectl get pods -l app=example
+```
+
+### تست اتصال
+
+برای آزمایش اتصال، می‌توانید از یکی از Podها به Pod دیگر با استفاده از نام سرویس `example-service` پینگ کنید یا یک درخواست HTTP ارسال کنید:
+
+```bash
+kubectl exec -it pod-one -- curl example-service
+```
+
+این دستور یک درخواست HTTP به سرویس ارسال می‌کند که به طور خودکار به یکی از Podهایی که برچسب `app=example` دارند، هدایت می‌شود.
+
+به این ترتیب، دو Pod با استفاده از برچسب‌ها و انتخاب‌گرها به هم متصل شدند و می‌توانند از طریق سرویس به یکدیگر دسترسی داشته باشند.
