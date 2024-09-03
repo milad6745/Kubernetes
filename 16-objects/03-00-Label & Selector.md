@@ -189,6 +189,12 @@ kubectl get pods -l app=example
 ```bash
 kubectl exec -it pod-one -- curl example-service
 ```
+```bash
+kubectl get ep
+NAME              ENDPOINTS                       AGE
+example-service   10.244.0.45:80,10.244.0.46:80   13m
+```
+
 
 این دستور یک درخواست HTTP به سرویس ارسال می‌کند که به طور خودکار به یکی از Podهایی که برچسب `app=example` دارند، هدایت می‌شود.
 
