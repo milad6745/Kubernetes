@@ -36,7 +36,99 @@ kubectl get pods --all-namespaces | grep -i nginx-controller
 
 **تنظیم NGINX Ingress Controller در کلاستر Kubernetes**
 
+
 ```
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/baremetal/deploy.yaml
 ```
+
+برای بررسی وضعیت پادهای nginx-ingress controller دستور زیر را اجرا کنید
+
+```
+kubectl get pods -n ingress-nginx
+```
+
+برای تست یک مانیفست ایجاد میکنیم.
+استقرار httpd و سرویس آن را با نوع NodePort روی درگاه 80 پیاده سازی کنید، فایل yaml زیر را که شامل بخش استقرار و سرویس است ایجاد کنید:
+
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: httpd-deployment
+  template:
+    metadata:
+      labels:
+        run: httpd-deployment
+    spec:
+      containers:
+      - image: httpd
+        name: httpd-webserver
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd-service
+spec:
+  type: ClusterIP
+  selector:
+    run: httpd-deployment
+  ports:
+    - port: 8
+```
+
+استقرار nginx و سرویس آن را با نوع NodePort روی درگاه 80 پیاده سازی کنید، فایل yaml زیر را که شامل بخش استقرار و سرویس است ایجاد کنید:
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: nginx-deployment
+  template:
+    metadata:
+      labels:
+        run: nginx-deployment
+    spec:
+      containers:
+      - image: nginx
+        name: nginx-webserver
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  type: ClusterIP
+  selector:
+    run: nginx-deployment
+  ports:
+    - port: 80
+```
+
+```
+kubectl describe ingress name-based-virtualhost-ingress
+kubectl describe ingress name-based-virtualhost-ingress
+```
+
+
+قبل از دسترسی به این url ها از خارج از کلاستر، لطفا مطمئن شوید که ورودی های زیر را در فایل hosts سیستم خود اضافه کردید.
+```
+192.168.1.190                httpd.example.com
+192.168.1.190                nginx.example.com
+```
+![03](https://github.com/user-attachments/assets/dd48dcd5-2fba-4b31-91a9-b3dae90c3c27)
+![04](https://github.com/user-attachments/assets/00d75480-e343-4823-9002-53ffc88c9f58)
+
 
