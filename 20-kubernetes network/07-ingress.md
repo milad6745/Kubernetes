@@ -117,6 +117,39 @@ spec:
     - port: 80
 ```
 
+**ساخت ingress , استقرار**
+
+```
+apiVersion: networking.k8s.io/v1
+ kind: Ingress
+ metadata:
+   name: name-based-virtualhost-ingress
+ spec:
+   rules:
+ host: httpd.example.com
+ http:
+   paths:
+ pathType: Prefix
+ path: "/"
+ backend:
+   service:
+     name: httpd-service
+     port:
+       number: 80
+ host: nginx.example.com
+ http:
+   paths:
+ pathType: Prefix
+ path: "/"
+ backend:
+   service:
+     name: nginx-service
+     port:
+       number: 80
+```
+
+
+
 ```
 kubectl describe ingress name-based-virtualhost-ingress
 kubectl describe ingress name-based-virtualhost-ingress
