@@ -103,6 +103,8 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: example-pv
+  labels:
+    type: local
 spec:
   capacity:
     storage: 1Gi
@@ -111,6 +113,8 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/mnt/data"
+  persistentVolumeReclaimPolicy: Retain
+
 ```
 
 ### 2. ایجاد PersistentVolumeClaim (pvc.yaml):
@@ -126,6 +130,10 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  selector:
+    matchLabels:
+      type: local
+
 ```
 
 ### 3. ایجاد Pod (pod.yaml):
