@@ -128,6 +128,11 @@ kubectl apply -f pod.yaml
 
 با اجرای این مراحل، یک `Pod` با یک `PersistentVolumeClaim` که از `StorageClass` مشخصی استفاده می‌کند ایجاد می‌شود.
 
+مشاهده میشود که یک PV مطابق شکل بصورت اتوماتیک ایجاد میشود (Dynamic provision)
+
+حالت BOUND حالت مطلوب ما میباشد.
+
+
 ```
 kubectl get pv
 example-pv                                 1Gi        RWO            Retain           Available                                                  24h
