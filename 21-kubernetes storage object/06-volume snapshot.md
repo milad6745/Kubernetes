@@ -84,3 +84,33 @@
    ```
 
    در این مثال، یک `PersistentVolumeClaim` جدید با نام `restored-pvc` ایجاد شده که از `VolumeSnapshot` با نام `my-snapshot` بازیابی شده و می‌توان از آن برای استفاده در `Pod` جدید استفاده کرد.
+
+
++---------------------+
+| VolumeSnapshotClass |
+|---------------------|
+| - Name              |
+| - Driver            |
+| - DeletionPolicy    |
++---------+-----------+
+          |
+          |  Uses
+          v
++---------------------+
+|   VolumeSnapshot    |
+|---------------------|
+| - Name              |
+| - Source (PVC)      |
+| - SnapshotClassName |
++---------+-----------+
+          |
+          |  Creates
+          v
++---------------------+
+|  VolumeSnapshotContent  |
+|---------------------|
+| - Name              |
+| - SnapshotHandle    |
+| - Source (PVC)      |
+| - SnapshotData      |
++---------------------+
