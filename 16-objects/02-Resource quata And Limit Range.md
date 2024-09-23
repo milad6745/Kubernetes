@@ -52,3 +52,18 @@ spec:
 - **Limit Range** به مدیریت منابع در سطح pod یا container کمک می‌کند و باعث می‌شود هر pod یا container تنها به منابع مشخص شده دسترسی داشته باشد.
 
 این دو ابزار با هم به شما امکان می‌دهند تا مصرف منابع را در سطح کلی cluster و در سطح جزئی‌تر، یعنی pod و container، به خوبی مدیریت کنید.s
+
+
+## check resource quata
+
+```
+kubectl describe quota
+Name:            example-quota
+Namespace:       default
+Resource         Used   Hard
+--------         ----   ----
+limits.cpu       1010m  2
+limits.memory    628Mi  4Gi
+requests.cpu     760m   2
+requests.memory  364Mi  4Gi
+```
