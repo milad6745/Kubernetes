@@ -28,16 +28,29 @@ Kubelet
 
 وقتی تغییری در تعداد ReplicaSet یا هر منبع دیگری که مستقیماً به کانتینرها مرتبط است (مانند Podها که توسط ReplicaSet مدیریت می‌شوند)، در CoreDNS ایجاد می‌شود، چندین کامپوننت از معماری Kubernetes درگیر خواهند شد. این فرآیند به شکل زیر است:
 
-**کاربر یا مدیر:** ابتدا، کاربر یا مدیر تصمیم می‌گیرد که تغییراتی در ReplicaSet اعمال کند. این ممکن است از طریق ابزارهای مدیریتی مانند `kubectl` یا از طریق تعریف یک فایل YAML برای اعمال تغییرات باشد.
+**کاربر یا مدیر:**
 
-**Kubectl یا API Server:** اطلاعات تغییرات توسط `kubectl` یا API Server (بخشی از Control Plane) دریافت و ارسال می‌شود. این اطلاعات شامل تغییرات در تعداد ReplicaSet یا مشخصات Podها می‌شود.
+ابتدا، کاربر یا مدیر تصمیم می‌گیرد که تغییراتی در ReplicaSet اعمال کند. این ممکن است از طریق ابزارهای مدیریتی مانند `kubectl` یا از طریق تعریف یک فایل YAML برای اعمال تغییرات باشد.
 
-**Replication Controller Manager:** اگر تغییرات مربوط به ReplicaSet باشند، Replication Controller Manager (یکی از اجزای Control Plane) وظیفه مدیریت ReplicaSetها و تعداد مورد نیاز از Podها را دارد. این مدیریت‌کننده مسئول تغییر تعداد مورد نیاز از ReplicaSet و به تبع آن تعداد Podها است.
+**Kubectl یا API Server:**
 
-**Scheduler:** اگر تعداد ReplicaSet افزایش یافته و نیاز به اجرای Podهای جدید باشد، Scheduler (بخش دیگری از Control Plane) وظیفه انتخاب نودهای مناسب برای اجرای این Podها را دارد.
+اطلاعات تغییرات توسط `kubectl` یا API Server (بخشی از Control Plane) دریافت و ارسال می‌شود. این اطلاعات شامل تغییرات در تعداد ReplicaSet یا مشخصات Podها می‌شود.
 
-**Kubelet:** Kubelet در هر نودی که انتخاب شده‌اند، مسئول اجرای و مدیریت Podها است. Kubelet دستورات اجرای جدید را از Scheduler دریافت کرده و با ایجاد و مدیریت Containerها (در اینجا ممکن است CoreDNS) بر روی نودها درگیر می‌شود.
+**Replication Controller Manager:** 
 
-**Container Runtime:** Container Runtime (مانند Docker) نقش اجرایی را برعهده دارد و Containerها را اجرا می‌کند. این فرآیند شامل اجرای یا تغییر تعداد ReplicaSet ممکن است تغییراتی را در Container Runtime ایجاد کند.
+
+اگر تغییرات مربوط به ReplicaSet باشند، Replication Controller Manager (یکی از اجزای Control Plane) وظیفه مدیریت ReplicaSetها و تعداد مورد نیاز از Podها را دارد. این مدیریت‌کننده مسئول تغییر تعداد مورد نیاز از ReplicaSet و به تبع آن تعداد Podها است.
+
+**Scheduler:** 
+
+اگر تعداد ReplicaSet افزایش یافته و نیاز به اجرای Podهای جدید باشد، Scheduler (بخش دیگری از Control Plane) وظیفه انتخاب نودهای مناسب برای اجرای این Podها را دارد.
+
+**Kubelet:**
+
+Kubelet در هر نودی که انتخاب شده‌اند، مسئول اجرای و مدیریت Podها است. Kubelet دستورات اجرای جدید را از Scheduler دریافت کرده و با ایجاد و مدیریت Containerها (در اینجا ممکن است CoreDNS) بر روی نودها درگیر می‌شود.
+
+**Container Runtime:**
+
+Container Runtime (مانند Docker) نقش اجرایی را برعهده دارد و Containerها را اجرا می‌کند. این فرآیند شامل اجرای یا تغییر تعداد ReplicaSet ممکن است تغییراتی را در Container Runtime ایجاد کند.
 
 تغییرات در تعداد ReplicaSet معمولاً به تغییرات در تعداد Podها و در نتیجه تعداد Containerهای مربوطه (مانند CoreDNS) منجر می‌شود. هر یک از این مراحل باعث به‌روزرسانی و تغییر وضعیت CoreDNS و دیگر کانتینرها می‌شوند.
