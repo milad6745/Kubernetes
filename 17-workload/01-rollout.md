@@ -1,13 +1,21 @@
-## rollout
+برای ایجاد یک **Rollout** در Kubernetes، شما معمولاً از یک **Deployment** استفاده می‌کنید. Deployment ها به شما این امکان را می‌دهند که نسخه‌های جدیدی از برنامه‌ها را به صورت تدریجی و ایمن روی Pods اعمال کنید. وقتی که نسخه جدیدی از برنامه یا تصویر (image) ایجاد می‌شود، Deployment به شما این امکان را می‌دهد که یک Rollout جدید شروع کنید و Kubernetes به طور خودکار Pods را بروزرسانی می‌کند.
+
+در اینجا یک مثال از چگونگی ایجاد یک **Rollout** در Kubernetes با استفاده از یک **Deployment** آورده شده است:
+
+### مثال: ایجاد یک Rollout با استفاده از Deployment در Kubernetes
+
+1. **تعریف یک فایل YAML برای Deployment**
+   ابتدا یک فایل YAML برای Deployment ایجاد می‌کنیم که شامل اطلاعاتی درباره نام برنامه، نسخه تصویر (image) و تعداد replicas است. فرض کنید می‌خواهیم یک برنامه وب ساده با تصویر `nginx` در نسخه `1.19.0` راه‌اندازی کنیم.
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: my-nginx-deployment
   labels:
     app: nginx
 spec:
-  replicas: 3
+  replicas: 3  # تعداد پادهایی که می‌خواهیم
   selector:
     matchLabels:
       app: nginx
@@ -18,70 +26,77 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:1.14.2
+        image: nginx:1.19.0  # نسخه اولیه از تصویر Nginx
         ports:
         - containerPort: 80
 ```
+
+در این فایل:
+- **replicas**: تعداد Podهایی که برای برنامه ایجاد می‌شود. در این مثال، ۳ Pod.
+- **image**: نسخه‌ای از تصویر کانتینر که باید اجرا شود (در اینجا `nginx:1.19.0`).
+- **selector**: Kubernetes باید Pods را با این label پیدا کند تا بتواند آن‌ها را مدیریت کند.
+- **template**: تعریف Podهایی که توسط Deployment ایجاد می‌شوند.
+
+2. **ایجاد Deployment**
+
+برای ایجاد Deployment از فایل YAML فوق، دستور زیر را اجرا می‌کنیم:
 
 ```bash
-kubectl rollout status deployment nginx-deployment
-deployment "nginx-deployment" *successfully* rolled out
+kubectl apply -f nginx-deployment.yaml
 ```
-بررسی وضعیت راه‌اندازی: این دستور به شما می‌گوید که آیا فرآیند راه‌اندازی (rollout) Deployment با موفقیت انجام شده است یا خیر.
 
-گزارش مشکلات احتمالی: اگر مشکلی در فرآیند راه‌اندازی وجود داشته باشد (مثلاً پادها نتوانند به وضعیت سالم برسند)، این دستور می‌تواند اطلاعاتی در مورد آن به شما ارائه دهد.
+این دستور Deployment را بر اساس تعریف فایل YAML می‌سازد و Pods مربوطه را ایجاد می‌کند.
 
-صبر کردن برای تکمیل: دستور تا زمانی که فرآیند راه‌اندازی کامل نشده باشد، به شما اطلاع نمی‌دهد. به عبارت دیگر، تا زمانی که Deployment به حالت مطلوب نرسد (تعداد پادهای مورد انتظار به درستی اجرا نشود)، دستور اجرا می‌ماند.
+3. **مشاهده وضعیت Deployment**
 
+پس از ایجاد Deployment، می‌توانید وضعیت آن را با استفاده از دستور زیر مشاهده کنید:
 
-## rollouttest
-عوض کردن ورژن:
-
+```bash
+kubectl get deployments
 ```
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-deployment
-  labels:
-    app: nginx
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-      - name: nginx
-        image: nginx:1.14.2
-        ports:
-        - containerPort: 80
-```
-مشاهده میشود که پاد جدید در حال ایجاد است و در صورتی که درست ایجاد شود پاد های قبلی پاک میشود .
-```
-kubectl get all
-NAME                                    READY   STATUS              RESTARTS   AGE
-pod/nginx-deployment-576477d75f-7jwlt   0/1     ContainerCreating   0          94s
-pod/nginx-deployment-86dcfdf4c6-67lfj   1/1     Running             0          20m
-pod/nginx-deployment-86dcfdf4c6-gczvg   1/1     Running             0          20m
-pod/nginx-deployment-86dcfdf4c6-w7tjd   1/1     Running             0          20m
 
-NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
-service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   20m
+این دستور اطلاعات مربوط به Deployment ایجاد شده را نمایش می‌دهد، از جمله تعداد replicas که در حال حاضر در حال اجرا است.
 
-NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/nginx-deployment   3/3     1            3           20m
+4. **انجام Rollout جدید (به‌روزرسانی نسخه)**
 
-NAME                                          DESIRED   CURRENT   READY   AGE
-replicaset.apps/nginx-deployment-576477d75f   1         1         0       94s
-replicaset.apps/nginx-deployment-86dcfdf4c6   3         3         3       20m
-replicaset.apps/nginx-deployment-94bd5979     0         0         0       8m53s
-replicaset.apps/nginx-deployment-c5b86c7bf    0         0         0       9m25s
-root@myubuntu:~/kuber# kubectl get all
+حالا فرض کنید می‌خواهید نسخه Nginx را به نسخه جدیدتری، مثلاً `1.21.0` به‌روزرسانی کنید. شما می‌توانید این کار را با استفاده از دستور `kubectl set image` انجام دهید. به این صورت:
+
+```bash
+kubectl set image deployment/my-nginx-deployment nginx=nginx:1.21.0
 ```
+
+این دستور باعث می‌شود که تصویر کانتینر Nginx از نسخه `1.19.0` به نسخه `1.21.0` به‌روزرسانی شود. Kubernetes به‌طور خودکار یک **Rollout** جدید آغاز می‌کند و Pods قدیمی را به تدریج با نسخه جدید جایگزین می‌کند.
+
+5. **مشاهده وضعیت Rollout**
+
+برای مشاهده وضعیت **Rollout** و پیگیری پیشرفت آن، از دستور زیر استفاده کنید:
+
+```bash
+kubectl rollout status deployment/my-nginx-deployment
+```
+
+این دستور به شما می‌گوید که آیا **Rollout** با موفقیت انجام شده است یا خیر.
+
+6. **بازگشت به نسخه قبلی (Rollback)**
+
+اگر به هر دلیلی به نسخه قبلی نیاز داشتید (مثلاً نسخه جدید مشکلی ایجاد کرده است)، می‌توانید به راحتی Rollout را به نسخه قبلی بازگردانید. برای این کار از دستور زیر استفاده کنید:
+
+```bash
+kubectl rollout undo deployment/my-nginx-deployment
+```
+
+این دستور **Rollout** را به نسخه قبلی باز می‌گرداند.
+
+### جمع‌بندی:
+- **Rollout** در Kubernetes یک فرآیند تدریجی برای به‌روزرسانی Pods است.
+- شما می‌توانید نسخه‌های جدید برنامه را با استفاده از `kubectl set image` به راحتی بروزرسانی کنید.
+- با استفاده از `kubectl rollout status` می‌توانید پیشرفت عملیات بروزرسانی را پیگیری کنید.
+- در صورت بروز مشکلات، می‌توانید از دستور `kubectl rollout undo` برای بازگشت به نسخه قبلی استفاده کنید.
+
+اگر سوال دیگری دارید یا به جزئیات بیشتری نیاز دارید، خوشحال می‌شوم کمک کنم!
+
+
+
 تاریخچه میگیریم از جابجایی هایمان
 ```
 kubectl rollout history deployment nginx-deployment
