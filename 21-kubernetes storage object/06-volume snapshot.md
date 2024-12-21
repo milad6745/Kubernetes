@@ -2,9 +2,13 @@
 
 در Kubernetes، برخی از API ها و منابع مرتبط با Volume Snapshot عبارتند از:
 
-1. **`VolumeSnapshot` و `VolumeSnapshotClass`:** این منابع به شما اجازه می‌دهند تا یک Volume Snapshot ایجاد کنید و تنظیمات مربوط به ایجاد Snapshot را تعیین کنید. `VolumeSnapshotClass` نیز تعیین می‌کند که چگونه Snapshot ایجاد شده و مدیریت می‌شود.
+ **`VolumeSnapshot` و `VolumeSnapshotClass`:**
 
-2. **`VolumeSnapshotContent`:** این منبع مشخص می‌کند که Snapshot ایجاد شده چگونه ذخیره می‌شود و می‌تواند به عنوان یک نقطه انتقال برای ایجاد Volume جدید با استفاده از Snapshot مورد استفاده قرار گیرد.
+این منابع به شما اجازه می‌دهند تا یک Volume Snapshot ایجاد کنید و تنظیمات مربوط به ایجاد Snapshot را تعیین کنید. `VolumeSnapshotClass` نیز تعیین می‌کند که چگونه Snapshot ایجاد شده و مدیریت می‌شود.
+
+ **`VolumeSnapshotContent`:**
+
+این منبع مشخص می‌کند که Snapshot ایجاد شده چگونه ذخیره می‌شود و می‌تواند به عنوان یک نقطه انتقال برای ایجاد Volume جدید با استفاده از Snapshot مورد استفاده قرار گیرد.
 
 با استفاده از این قابلیت‌ها، می‌توانید به راحتی Snapshots ایجاد کنید و از آن‌ها برای پشتیبان‌گیری و بازیابی داده‌های حجم‌های Kubernetes خود استفاده کنید.
 
