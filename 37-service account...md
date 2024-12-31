@@ -3,8 +3,10 @@
 ---
 
 ### 1. **ServiceAccount چیست؟**
-- **ServiceAccount** مثل یک هویت (identity) برای پادها است. 
-- وقتی یک پاد می‌خواهد با APIهای Kubernetes ارتباط برقرار کند (مثل ایجاد پاد جدید یا خواندن ConfigMap)، از یک ServiceAccount استفاده می‌کند.
+- **ServiceAccount**
+-
+مثل یک هویت (identity) برای پادها است. 
+وقتی یک پاد می‌خواهد با APIهای Kubernetes ارتباط برقرار کند (مثل ایجاد پاد جدید یا خواندن ConfigMap)، از یک ServiceAccount استفاده می‌کند.
 
 ### 2. **Role یا ClusterRole چیست؟**
 - **Role** یا **ClusterRole** مجموعه‌ای از دسترسی‌ها است. 
@@ -26,6 +28,7 @@
 ### چطور اینها با هم کار می‌کنند؟
 
 #### مثال:
+
 فرض کنید:
 - **ServiceAccount:** یک پاد دارید که با نام `serviceaccount-jenkins` کار می‌کند.
 - **ClusterRole:** شما یک ClusterRole به نام `clusterrole-jenkins` تعریف کرده‌اید که اجازه `list` و `create` برای پادها را می‌دهد.
