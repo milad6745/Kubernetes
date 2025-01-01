@@ -1,14 +1,22 @@
 مستر نود سه تا میاریم بالا
+
 شامل
+
 etcd
 schduler
 control manager
 api server
+
 که api server در لحظه سه تاشون جواب میدهند که horizentaly scale میشود که api server بصورت ulti master است.
+
 ماژول های schduler و control maanger یکیشون فقط جواب میدهند . که بصورت master slave است .
+
 در etcd باید 3 تا باشد، اگر دو تا فیلد شود کلاستر میخوابد (داخلش کوآروم برقراره برای election)(الگوریتم Raft)
+
 تنها چیزی که میتواند به etcd ارتباط داشته باشد api server است .
+
 عدد 3 -5 -7 عدد مناسبی برای تعداد مستر است برایش هست .
+
 حداقل سه تا worker
 ![image](https://github.com/user-attachments/assets/d85b0a0e-3dc3-48b8-b638-279eb8b2a02d)
 
