@@ -2,10 +2,10 @@
 
 شامل
 
-etcd
-schduler
-control manager
-api server
+- etcd
+- schduler
+- control manager
+- api server
 
 که api server در لحظه سه تاشون جواب میدهند که horizentaly scale میشود که api server بصورت ulti master است.
 
