@@ -58,6 +58,31 @@ subjects:
 EOF
 ```
 
+**check create role and rolebinding**
+```bash
+kubectl describe  role -n mon
+Name:         reader
+Labels:       <none>
+Annotations:  <none>
+PolicyRule:
+  Resources  Non-Resource URLs  Resource Names  Verbs
+  ---------  -----------------  --------------  -----
+  *.*        []                 []              [get watch list]
+root@myubuntu:~/kuber# kubectl describe  rolebindings.rbac.authorization.k8s.io -n mon
+Name:         reader
+Labels:       <none>
+Annotations:  <none>
+Role:
+  Kind:  Role
+  Name:  reader
+Subjects:
+  Kind            Name   Namespace
+  ----            ----   ---------
+  ServiceAccount  ahmad  mon
+```
+
+
+
 **Step 4:** get token for ahmad service account
 ```bash
 kubectl -n mon create token ahmad
