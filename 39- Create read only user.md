@@ -74,7 +74,7 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6IlVoa3VJTjlUa29ZRXd2cHJaamM2ejhnaThmUWFicE9zUDVrZHZI
 ```
 and
 add ahmad user to context
-```
+```bash
 - context:
     cluster: kind-kind-kind
     user: ahmad
