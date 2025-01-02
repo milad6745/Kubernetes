@@ -40,6 +40,9 @@ remote file exists
 
 Limit access to the nginx service
 To limit the access to the nginx service so that only Pods with the label access: true can query it, create a NetworkPolicy object as follows:
+
+یک نتورک پالیسی ایجاد میکنم برای nginx درست کردم که هر کسی که label access=true را داشت بتونه بهش متصل بشود
+
 ```bash
 cat <<EOF | kubectl apply -f -
 apiVersion: networking.k8s.io/v1
@@ -65,6 +68,9 @@ kubectl run busybox --rm -ti --image=busybox:1.28 -- /bin/sh
 ```
 
 In your shell, run the command:
+
+میبینیم نمیتواند متصل شود چون لیبل را ندارد
+
 ```bash
 wget --spider --timeout=1 nginx
 
@@ -75,6 +81,8 @@ wget: download timed out
 
 Define access label and test again
 You can create a Pod with the correct labels to see that the request is allowed:
+
+حالا لیبل مورد نظر را بهش میدهیم و مشاهده میکنیم ارتباط مجدد برقرار میشود
 ```bash
 kubectl run busybox --rm -ti --labels="access=true" --image=busybox:1.28 -- /bin/sh
 ```
