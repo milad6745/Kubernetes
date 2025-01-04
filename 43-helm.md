@@ -100,5 +100,3 @@ my-chart/
   values.yaml      # متغیرهای پیش‌فرض پیکربندی
   templates/       # فایل‌های YAML منابع Kubernetes
 ```
-
-اگر سوال بیشتری در مورد Helm دارید، بپرسید!
