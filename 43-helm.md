@@ -17,7 +17,8 @@
    - Helm از مخازن (Repository) برای ذخیره و اشتراک‌گذاری Charts استفاده می‌کند.
  مخازن معروف: [ArtifactHub](https://artifacthub.io)
 
-5. **Release Management:**
+3. **Release Management:**
+
  وقتی یک Chart روی کلاستر نصب می‌شود، به آن یک **Release** گفته می‌شود.
    - Helm امکان مدیریت و به‌روزرسانی Releaseها را به‌سادگی فراهم می‌کند.
 
