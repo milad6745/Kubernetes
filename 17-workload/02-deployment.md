@@ -6,6 +6,9 @@
 ![image](https://github.com/milad6745/Kubernetes/assets/113288076/daa8e837-b801-44ee-8565-d64c15918c2c)
 
 
+![image](https://github.com/user-attachments/assets/2e69af33-9537-4882-903f-ea9b01562ba7)
+
+
 # Example
 ```yaml
 apiVersion: apps/v1
