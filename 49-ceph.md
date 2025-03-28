@@ -35,7 +35,7 @@
    حالا باید **Rook Operator** رو نصب کنی. برای نصب از دستور زیر استفاده کن:
 
    ```bash
-   kubectl apply -f https://github.com/rook/rook/releases/download/v1.9.9/rook-ceph-operator.yaml
+   kubectl apply -f https://raw.githubusercontent.com/rook/rook/v1.9.9/deploy/examples/operator.yaml
    ```
 
    این دستور Rook Operator را نصب می‌کند که به‌طور خودکار Ceph را روی کلاستر Kubernetes مدیریت می‌کند.
