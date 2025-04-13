@@ -65,3 +65,47 @@ kubectl get jobs.batch pi
 NAME   COMPLETIONS   DURATION   AGE
 pi     1/1           118s       24h
 ```
+
+```
+kubectl describe  jobs.batch
+Name:             example-job
+Namespace:        default
+Selector:         batch.kubernetes.io/controller-uid=9384b68c-0e96-4aa6-b435-27c71c32b4da
+Labels:           batch.kubernetes.io/controller-uid=9384b68c-0e96-4aa6-b435-27c71c32b4da
+                  batch.kubernetes.io/job-name=example-job
+                  controller-uid=9384b68c-0e96-4aa6-b435-27c71c32b4da
+                  job-name=example-job
+Annotations:      <none>
+Parallelism:      1
+Completions:      1
+Completion Mode:  NonIndexed
+Suspend:          false
+Backoff Limit:    6
+Start Time:       Sun, 13 Apr 2025 15:58:35 +0330
+Completed At:     Sun, 13 Apr 2025 15:58:39 +0330
+Duration:         4s
+Pods Statuses:    0 Active (0 Ready) / 1 Succeeded / 0 Failed
+Pod Template:
+  Labels:  batch.kubernetes.io/controller-uid=9384b68c-0e96-4aa6-b435-27c71c32b4da
+           batch.kubernetes.io/job-name=example-job
+           controller-uid=9384b68c-0e96-4aa6-b435-27c71c32b4da
+           job-name=example-job
+  Containers:
+   exjob:
+    Image:      busybox
+    Port:       <none>
+    Host Port:  <none>
+    Command:
+      echo
+      Hello from the job!
+    Environment:   <none>
+    Mounts:        <none>
+  Volumes:         <none>
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Events:
+  Type    Reason            Age    From            Message
+  ----    ------            ----   ----            -------
+  Normal  SuccessfulCreate  2m29s  job-controller  Created pod: example-job-hxpnj
+  Normal  Completed         2m24s  job-controller  Job completed
+```
