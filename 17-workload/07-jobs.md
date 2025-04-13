@@ -33,10 +33,13 @@ spec:
       name: example-job
     spec:
       containers:
-      - name: example-container
+      - name: exjob
         image: busybox
+        imagePullPolicy: Never
         command: ["echo", "Hello from the job!"]
-  backoffLimit: 2
+
+      restartPolicy: OnFailure
+
 ```
 
 در این مثال:
