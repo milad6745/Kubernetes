@@ -112,3 +112,28 @@ spec:
           app: pod-2
 ```
 
+
+نسخه کامل برای مسدود کردن کامل ترافیک خروجی:
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: block-all-egress
+  namespace: your-namespace
+spec:
+  podSelector:
+    matchLabels:
+      app: pod-1
+  policyTypes:
+  - Egress
+```
+
+🧠 معنی این policy:
+فقط روی پادهایی با لیبل app: pod-1 تو namespace your-namespace اعمال می‌شه.
+
+چون policyTypes فقط Egress هست و هیچ مقصدی مشخص نشده، یعنی:
+
+این پادها به هیچ جایی (نه اینترنت، نه DNS، نه پاد دیگه‌ای) نمی‌تونن ترافیک بفرستن.
+
+
+
