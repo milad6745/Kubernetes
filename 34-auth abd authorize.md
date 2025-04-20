@@ -89,3 +89,17 @@ Kubernetes از چندین روش برای مجوزدهی پشتیبانی می�
   ```bash
   kubectl auth can-i <verb> <resource> --as=<user>
   ```
+
+
+
+🔐 چه کارهایی می‌تونی محدود یا اجازه بدی؟
+با verbsهایی مثل:
+
+get, list, watch (فقط خوندن)
+
+create, update, patch, delete (نوشتن)
+
+و منابعی مثل:
+
+pods, services, deployments, configmaps, و...
+
