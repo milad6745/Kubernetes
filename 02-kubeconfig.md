@@ -110,3 +110,93 @@ users:
     client-key-data: REDACTED
 
 ```
+
+
+
+### کانتکست (Context) در Kubernetes:
+
+در فایل `kubeconfig`، **کانتکست** (context) یک ترکیب از سه بخش است:
+
+1. **کلاستر** (Cluster): مشخص می‌کند به کدام کلاستر Kubernetes متصل شوی.
+2. **کاربر** (User): اطلاعات احراز هویت، مثل توکن یا گواهی‌های امنیتی برای دسترسی به کلاستر.
+3. **فضای نام (Namespace)**: تنظیم می‌کند که دستورات `kubectl` روی کدام فضای نام در کلاستر اجرا شوند (اگر فضای نام خاصی تنظیم نشده باشد، به‌طور پیش‌فرض روی فضای نام `default` اجرا می‌شود).
+
+### چرا کانتکست مهم است؟
+
+کانتکست به تو کمک می‌کند که:
+
+* به راحتی بین کلاسترهای مختلف سوییچ کنی.
+* بدون نیاز به یادآوری جزئیات اتصال، به‌طور سریع و آسان با کلاسترها کار کنی.
+
+### مثال:
+
+فرض کن یک فایل `kubeconfig` داری که اطلاعات دو کلاستر مختلف رو در خودش داره:
+
+* یکی برای کلاستر **توسعه** (Dev)
+* یکی برای کلاستر **تولید** (Prod)
+
+#### نمونه فایل kubeconfig:
+
+```yaml
+apiVersion: v1
+clusters:
+- name: dev-cluster
+  cluster:
+    server: https://dev-cluster-url:6443
+    certificate-authority: /path/to/ca.crt
+- name: prod-cluster
+  cluster:
+    server: https://prod-cluster-url:6443
+    certificate-authority: /path/to/ca.crt
+
+users:
+- name: dev-user
+  user:
+    client-certificate: /path/to/dev-client.crt
+    client-key: /path/to/dev-client.key
+- name: prod-user
+  user:
+    client-certificate: /path/to/prod-client.crt
+    client-key: /path/to/prod-client.key
+
+contexts:
+- name: dev-context
+  context:
+    cluster: dev-cluster
+    user: dev-user
+    namespace: dev-namespace
+- name: prod-context
+  context:
+    cluster: prod-cluster
+    user: prod-user
+    namespace: prod-namespace
+
+current-context: dev-context
+```
+
+در این فایل:
+
+* دو **کلاستر** داریم: `dev-cluster` و `prod-cluster`.
+* دو **کاربر** داریم: `dev-user` و `prod-user`.
+* دو **کانتکست** داریم: `dev-context` و `prod-context`.
+
+**کانتکست** `dev-context` به این معناست که دستورات `kubectl` به کلاستر `dev-cluster` وصل می‌شوند و از کاربر `dev-user` استفاده می‌کنند. فضای نام هم `dev-namespace` است.
+
+### سوییچ کردن بین کانتکست‌ها:
+
+با دستور زیر می‌توانی بین این دو کانتکست سوییچ کنی:
+
+```bash
+kubectl config use-context prod-context
+```
+
+و بعد از آن همه دستورات `kubectl` به کلاستر **تولید** متصل خواهند شد.
+
+---
+
+### خلاصه:
+
+* **کانتکست** ترکیبی از کلاستر، کاربر و فضای نام است.
+* با استفاده از کانتکست‌ها می‌توانی به راحتی بین کلاسترهای مختلف سوییچ کنی.
+
+
