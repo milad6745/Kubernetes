@@ -4,7 +4,7 @@
 تعریف پاد (YAML/CLI)
 شما یک شیء پاد را با استفاده از kubectl یا فایل YAML تعریف می‌کنید. مثلاً:
 
-yaml
+```yaml
 Copy
 Edit
 apiVersion: v1
@@ -15,6 +15,7 @@ spec:
   containers:
   - name: my-container
     image: nginx
+```
 ارسال درخواست به API Server
 وقتی از kubectl apply یا kubectl create استفاده می‌کنید، دستور به Kubernetes API Server ارسال می‌شود.
 
