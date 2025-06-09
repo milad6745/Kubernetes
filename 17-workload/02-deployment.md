@@ -135,3 +135,14 @@ spec:
         - containerPort: پورت
   revisionHistoryLimit: <تعداد>
 ```
+
+| دستور                                                      | توضیح                                                    | منابع قابل استفاده                       |
+| ---------------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------- |
+| `kubectl rollout status <resource>/<name>`                 | بررسی وضعیت rollout (آیا کامل شده یا نه)                 | `deployment`, `statefulset`, `daemonset` |
+| `kubectl rollout restart <resource>/<name>`                | ریستارت کردن نرم (Soft Restart) پادها بدون تغییر در yaml | `deployment`, `statefulset`, `daemonset` |
+| `kubectl rollout undo <resource>/<name>`                   | برگشت به نسخه قبلی (Rollback)                            | `deployment`, `statefulset`              |
+| `kubectl rollout undo <resource>/<name> --to-revision=<n>` | برگشت به یک نسخه خاص (تاریخی)                            | `deployment`, `statefulset`              |
+| `kubectl rollout history <resource>/<name>`                | مشاهده تاریخچه rollout (نسخه‌ها)                         | `deployment`, `statefulset`              |
+| `kubectl rollout pause <resource>/<name>`                  | توقف rollout برای انجام چند تغییر پیاپی                  | `deployment`                             |
+| `kubectl rollout resume <resource>/<name>`                 | ادامه rollout بعد از pause                               | `deployment`                             |
+
