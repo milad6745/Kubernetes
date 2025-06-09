@@ -11,9 +11,10 @@ Calico:
 
 
 
-خلاصه نقش Calico:
+## خلاصه نقش Calico:
+
 Calico یک CNI (Container Network Interface) plugin است که دو نقش اصلی دارد:
 
-شبکه‌سازی بین پادها (Pod Networking)
+- شبکه‌سازی بین پادها (Pod Networking)
 
-اعمال سیاست‌های امنیتی شبکه (NetworkPolicy Enforcement)
+- اعمال سیاست‌های امنیتی شبکه (NetworkPolicy Enforcement)
