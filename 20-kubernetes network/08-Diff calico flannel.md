@@ -8,3 +8,12 @@ Flannel:
 Calico: 
 
 علاوه بر فراهم کردن شبکه Overlay، به عنوان یک راه‌حل امنیتی پیشرفته نیز شناخته می‌شود که امکاناتی مانند Network Policies را برای کنترل دسترسی بین Pods فراهم می‌آورد.
+
+
+
+خلاصه نقش Calico:
+Calico یک CNI (Container Network Interface) plugin است که دو نقش اصلی دارد:
+
+شبکه‌سازی بین پادها (Pod Networking)
+
+اعمال سیاست‌های امنیتی شبکه (NetworkPolicy Enforcement)
