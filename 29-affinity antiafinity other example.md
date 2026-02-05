@@ -86,6 +86,7 @@ spec:
 
 کنترل می‌کنه Pod روی کدوم Node اجرا بشه
 
+
 2️⃣ Pod Affinity / Anti-Affinity
 
 کنترل می‌کنه Pod کنار چه Podهایی یا دور از چه Podهایی باشه.
